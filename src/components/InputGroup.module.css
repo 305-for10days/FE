@@ -1,0 +1,16 @@
+.inputGroup {
+    padding: 36px 0;
+}
+
+.inputGroup > h1 {
+    margin: 0;
+    padding-bottom: 36px;
+    font-size: 24px;
+    font-weight: bold;
+    color: black;
+}
+
+.inputGroup > div {
+    display: flex;
+    gap: 20px;
+}

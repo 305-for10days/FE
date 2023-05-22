@@ -1,4 +1,6 @@
-import React, { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import sound from "../assets/sounds/ride.wav";
+import styled from "./Timer.module.css";
 
 interface timerProps {
     minutes: string;
@@ -14,6 +16,7 @@ const Timer = () => {
         milliseconds: "000",
     });
     const intervalRef = useRef(0);
+    const audioRef = useRef<HTMLAudioElement>(null);
 
     const timerFormat = (value: number, type: string) => {
         let formatValue = String(value);
@@ -27,7 +30,6 @@ const Timer = () => {
                 formatValue = "0" + String(value);
             }
         }
-
         return formatValue;
     };
 
@@ -38,13 +40,11 @@ const Timer = () => {
             intervalRef.current = setInterval(() => {
                 const newDate: Date = new Date();
                 const timerDate = new Date(newDate.getTime() - date.getTime());
-
                 const newTime = {
                     minutes: timerFormat(timerDate.getMinutes(), "minutes"),
                     seconds: timerFormat(timerDate.getSeconds(), "seconds"),
                     milliseconds: timerFormat(timerDate.getMilliseconds(), "milliseconds"),
                 };
-
                 setTime(newTime);
             }, 100);
         }
@@ -58,16 +58,18 @@ const Timer = () => {
     useEffect(() => {
         console.log(time);
 
-        // if (time.seconds === "10") {
-        //     console.log("10초가 지났습니다");
-        // }
+        if (time.seconds === "05") {
+            audioRef.current?.play();
+            console.log("10초가 지났습니다");
+        }
     }, [time]);
 
     return (
-        <div>
+        <div className={styled.timerContainer}>
             <div>
                 {time.minutes}:{time.seconds}:{time.milliseconds}
             </div>
+            <audio ref={audioRef} src={sound} />
             <button onClick={startTimer}>시작</button>
             <button onClick={stopTimer}>그만</button>
         </div>
