@@ -1,63 +1,98 @@
-import { useEffect } from "react";
-import { useRecoilState } from "recoil";
-import { infoAddState } from "../recoil/atoms/infoAddState";
+import { useEffect, useState } from "react";
 import InputGroup from "../components/InputGroup";
 import InputBox from "../components/InputBox";
 import RadioBox from "../components/RadioBox";
 import styled from "styled-components";
+import { useNavigate } from "react-router-dom";
+import Button from "../components/Button";
 
 const ContainerStyled = styled.div`
     position: relative;
+    display: flex;
+    flex-direction: column;
     padding: 0 24px;
     height: 100vh;
     background-color: white;
+    overflow: auto;
 `;
 
-const NextBtnStyled = styled.button`
-    cursor: pointer;
-    position: absolute;
-    bottom: 36px;
-    left: 50%;
-    width: 100%;
-    max-width: 342px;
-    margin: 0 auto;
-    height: 60px;
-    border: none;
-    border-radius: 8px;
-    background-color: #3888ff;
-    color: white;
-    font-size: 16px;
-    font-weight: bold;
-    transform: translateX(-50%);
-    transition: all 0.2s;
+const ContentBoxStyled = styled.div`
+    flex: 1;
 `;
+
+const NextBtnBoxStyled = styled.div`
+    padding: 20px 0 36px;
+    width: 100%;
+`;
+
+interface infoAddProps {
+    [key: string]: any;
+    gender: "M" | "W" | "";
+    height?: number;
+    weight?: number;
+    set: number;
+    count: number;
+}
+
+const initialize: infoAddProps = {
+    gender: "",
+    height: 0,
+    weight: 0,
+    set: 0,
+    count: 0,
+};
 
 const InfoPage = () => {
-    const [infoData, setInfoData] = useRecoilState(infoAddState);
+    const navigate = useNavigate();
+    const [infoData, setInfoData] = useState<infoAddProps>(initialize);
+    const [isDisabled, setIsDisabled] = useState<boolean>(true);
 
     const handleOnChange = (name: string, value: number) => {
         setInfoData({ ...infoData, [name]: value });
     };
 
+    const handleNextPage = () => {
+        navigate("/info/next");
+    };
+
     useEffect(() => {
-        console.log(infoData);
+        for (const key in infoData) {
+            if (infoData[key] === 0 || !infoData[key]) {
+                setIsDisabled(true);
+                return;
+            }
+        }
+        setIsDisabled(false);
     }, [infoData]);
 
     return (
         <ContainerStyled>
-            <InputGroup title="성별을 선택해주세요.">
-                <RadioBox value={infoData.gender} name="gender" handle={handleOnChange} />
-            </InputGroup>
-            <InputGroup title="키와 몸무게를 입력해주세요.">
-                <InputBox value={infoData.height} name="height" handle={handleOnChange}>
-                    cm
-                </InputBox>
-                <InputBox value={infoData.weight} name="weight" handle={handleOnChange}>
-                    kg
-                </InputBox>
-            </InputGroup>
-
-            <NextBtnStyled>다음으로 넘어가기</NextBtnStyled>
+            <ContentBoxStyled>
+                <InputGroup title="성별을 선택해주세요.">
+                    <RadioBox value={infoData.gender} name="gender" handle={handleOnChange} />
+                </InputGroup>
+                <InputGroup title="키와 몸무게를 입력해주세요.">
+                    <InputBox value={infoData.height} name="height" handle={handleOnChange}>
+                        cm
+                    </InputBox>
+                    <InputBox value={infoData.weight} name="weight" handle={handleOnChange}>
+                        kg
+                    </InputBox>
+                </InputGroup>
+                <InputGroup title="일주일에 운동을\n몇 번 얼마나 하시나요?">
+                    <InputBox value={infoData.set} name="set" handle={handleOnChange}>
+                        회/주
+                    </InputBox>
+                    <InputBox value={infoData.count} name="count" handle={handleOnChange}>
+                        분/회
+                    </InputBox>
+                </InputGroup>
+            </ContentBoxStyled>
+            <NextBtnBoxStyled>
+                <Button color="#3888FF" textColor="#fff" size="full" isDisabled={isDisabled} onClick={handleNextPage}>
+                    다음으로 넘어가기
+                </Button>
+            </NextBtnBoxStyled>
         </ContainerStyled>
     );
 };

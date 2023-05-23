@@ -37,13 +37,13 @@ const RadioGroup = ({ value, name, handle }: { value: string; name: string; hand
 
     return (
         <>
-            <RadioBoxStyled $active={value === "man"}>
+            <RadioBoxStyled $active={value === "M"}>
                 남성
-                <input type="radio" name="gender" value="man" onChange={handleOnChangeRadio} hidden />
+                <input type="radio" name="gender" value="M" onChange={handleOnChangeRadio} hidden />
             </RadioBoxStyled>
-            <RadioBoxStyled $active={value === "woman"}>
+            <RadioBoxStyled $active={value === "W"}>
                 여성
-                <input type="radio" name="gender" value="woman" onChange={handleOnChangeRadio} hidden />
+                <input type="radio" name="gender" value="W" onChange={handleOnChangeRadio} hidden />
             </RadioBoxStyled>
         </>
     );
