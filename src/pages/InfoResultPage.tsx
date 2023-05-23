@@ -4,21 +4,22 @@ import { useNavigate } from "react-router-dom";
 
 const ContainerStyled = styled.div`
     position: relative;
+    display: flex;
+    flex-direction: column;
     padding: 0 24px;
     height: 100vh;
     background-color: white;
 `;
 
 const ContentsBoxStyled = styled.div`
+    flex: 1;
     color: black;
+    padding-top: 70px;
 `;
 
 const NextBtnBoxStyled = styled.div`
-    position: absolute;
-    padding: 0 24px;
-    left: 0;
+    padding: 0 0 36px;
     width: 100%;
-    bottom: 36px;
 `;
 
 const InfoResultPage = () => {
@@ -31,7 +32,6 @@ const InfoResultPage = () => {
     return (
         <ContainerStyled>
             <ContentsBoxStyled>
-                <div>회원님의 체형은 통통형 이네요!</div>
                 <img src="/images/result.png" />
             </ContentsBoxStyled>
 

@@ -7,6 +7,8 @@ import MainPage from "./pages/MainPage";
 import LoginPage from "./pages/LoginPage";
 import { useEffect } from "react";
 import { authLoginState } from "./recoil/selectors/authSelector";
+import RoutinePage from "./pages/RoutinePage";
+import RoutineDetailPage from "./pages/RoutineDetailPage";
 
 function App() {
     const authState = useRecoilValue(authLoginState);
@@ -22,8 +24,11 @@ function App() {
                     {authState.isLogin ? (
                         <>
                             <Route path="/" element={<MainPage />} />
+                            <Route path="/main" element={<MainPage />} />
                             <Route path="/info" element={<InfoPage />} />
-                            <Route path="/info/next" element={<InfoResultPage />} />
+                            <Route path="/info/result" element={<InfoResultPage />} />
+                            <Route path="/routine" element={<RoutinePage />} />
+                            <Route path="/routine/:id" element={<RoutineDetailPage />} />
                         </>
                     ) : (
                         <>

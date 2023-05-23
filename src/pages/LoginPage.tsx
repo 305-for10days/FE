@@ -31,6 +31,7 @@ const LoginPage = () => {
     const setAuthState = useSetRecoilState(authLoginState);
 
     const handleKakaoLogin = () => {
+        localStorage.setItem("token", "123");
         setAuthState({ email: "123", isLogin: true });
         navigate("/info");
     };

@@ -12,15 +12,14 @@ const ContainerStyled = styled.div`
     flex-direction: column;
     padding: 0 24px;
     height: 100vh;
-    background-color: white;
-    overflow: auto;
+    background-color: #fff;
 `;
 
 const ContentBoxStyled = styled.div`
     flex: 1;
 `;
 
-const NextBtnBoxStyled = styled.div`
+const BtnBoxStyled = styled.div`
     padding: 20px 0 36px;
     width: 100%;
 `;
@@ -30,16 +29,16 @@ interface infoAddProps {
     gender: "M" | "W" | "";
     height?: number;
     weight?: number;
-    set: number;
-    count: number;
+    severalTimesWeek: number;
+    severalTimes: number;
 }
 
 const initialize: infoAddProps = {
     gender: "",
     height: 0,
     weight: 0,
-    set: 0,
-    count: 0,
+    severalTimesWeek: 0,
+    severalTimes: 0,
 };
 
 const InfoPage = () => {
@@ -52,7 +51,7 @@ const InfoPage = () => {
     };
 
     const handleNextPage = () => {
-        navigate("/info/next");
+        navigate("/info/result");
     };
 
     useEffect(() => {
@@ -80,19 +79,19 @@ const InfoPage = () => {
                     </InputBox>
                 </InputGroup>
                 <InputGroup title="일주일에 운동을\n몇 번 얼마나 하시나요?">
-                    <InputBox value={infoData.set} name="set" handle={handleOnChange}>
+                    <InputBox value={infoData.severalTimesWeek} name="severalTimesWeek" handle={handleOnChange}>
                         회/주
                     </InputBox>
-                    <InputBox value={infoData.count} name="count" handle={handleOnChange}>
+                    <InputBox value={infoData.severalTimes} name="severalTimes" handle={handleOnChange}>
                         분/회
                     </InputBox>
                 </InputGroup>
             </ContentBoxStyled>
-            <NextBtnBoxStyled>
+            <BtnBoxStyled>
                 <Button color="#3888FF" textColor="#fff" size="full" isDisabled={isDisabled} onClick={handleNextPage}>
                     다음으로 넘어가기
                 </Button>
-            </NextBtnBoxStyled>
+            </BtnBoxStyled>
         </ContainerStyled>
     );
 };

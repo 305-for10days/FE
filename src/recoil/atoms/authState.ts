@@ -6,8 +6,8 @@ interface AuthentificationProps {
 }
 
 export const initialize: AuthentificationProps = {
-    email: "",
-    isLogin: false,
+    email: localStorage.getItem("token") || "",
+    isLogin: localStorage.getItem("token") ? true : false,
 };
 
 export const authState = atom<AuthentificationProps>({
