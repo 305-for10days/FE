@@ -1,6 +1,5 @@
 import { useEffect, useRef, useState } from "react";
 import sound from "../assets/sounds/ride.wav";
-import styled from "./Timer.module.css";
 
 interface timerProps {
     minutes: string;
@@ -15,7 +14,7 @@ const Timer = () => {
         seconds: "00",
         milliseconds: "000",
     });
-    const intervalRef = useRef(0);
+    const intervalRef = useRef<number>(0);
     const audioRef = useRef<HTMLAudioElement>(null);
 
     const timerFormat = (value: number, type: string) => {
@@ -37,7 +36,7 @@ const Timer = () => {
         const date: Date = new Date();
         if (!isStart) {
             setIsStart(true);
-            intervalRef.current = setInterval(() => {
+            const intervalID = setInterval(() => {
                 const newDate: Date = new Date();
                 const timerDate = new Date(newDate.getTime() - date.getTime());
                 const newTime = {
@@ -47,6 +46,7 @@ const Timer = () => {
                 };
                 setTime(newTime);
             }, 100);
+            intervalRef.current = Number(intervalID);
         }
     };
 
@@ -56,8 +56,6 @@ const Timer = () => {
     };
 
     useEffect(() => {
-        console.log(time);
-
         if (time.seconds === "05") {
             audioRef.current?.play();
             console.log("10초가 지났습니다");
@@ -65,7 +63,7 @@ const Timer = () => {
     }, [time]);
 
     return (
-        <div className={styled.timerContainer}>
+        <div style={{ color: "black" }}>
             <div>
                 {time.minutes}:{time.seconds}:{time.milliseconds}
             </div>

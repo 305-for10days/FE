@@ -1,14 +1,16 @@
-import React from "react";
 import Timer from "../components/Timer";
-import styled from "./MainPage.module.css";
+import styled from "styled-components";
+
+const ContainerStyled = styled.div`
+    background: rgb(240, 239, 229);
+    height: 100vh;
+`;
 
 const MainPage = () => {
     return (
-        <div className={styled.main}>
-            <div className={styled.timerContainer}>
-                <Timer />
-            </div>
-        </div>
+        <ContainerStyled>
+            <Timer />
+        </ContainerStyled>
     );
 };
 
