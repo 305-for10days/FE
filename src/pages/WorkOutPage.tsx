@@ -2,9 +2,30 @@ import styled from "styled-components";
 import Button from "../components/Button";
 import WorkOutBox from "../components/WorkOutBox";
 import { useWorkOuts } from "../hooks/useWorkOuts";
+import { useLocation, useNavigate } from "react-router-dom";
+import { useState } from "react";
+
+interface StepProps {
+    value: "workout" | "start";
+}
 
 const WorkOutPage = () => {
-    const { workOuts, handleOnClickCheckWorkdOut } = useWorkOuts();
+    const location = useLocation();
+    const navigate = useNavigate();
+    const id = location.pathname.split("/")[2];
+    const [step, setStep] = useState<StepProps>({ value: "workout" });
+    const { workOuts, checked, handleOnClickCheckWorkdOut } = useWorkOuts();
+
+    const handleOnClickSucess = () => {
+        if (step.value === "workout") {
+            setStep({ value: "start" });
+            return;
+        }
+        if (step.value === "start") {
+            // api 호출
+            navigate(`/routine/${id}/result`);
+        }
+    };
 
     return (
         <ContainerStyled>
@@ -12,13 +33,13 @@ const WorkOutPage = () => {
                 <h1 className="title">체지방 감소</h1>
                 <WorkOutListBoxStyled>
                     {workOuts.map((info) => (
-                        <WorkOutBox info={info} isActive={info.isActive} key={info.id} onClick={() => handleOnClickCheckWorkdOut(info.id)} />
+                        <WorkOutBox info={info} step={step.value} isActive={step.value !== "workout" && info.isActive} key={info.id} onClick={() => handleOnClickCheckWorkdOut(info.id)} />
                     ))}
                 </WorkOutListBoxStyled>
             </ContentBoxStyled>
             <BtnBoxStyled>
-                <Button color="#3888FF" textColor="#fff" size="full" isDisabled={true}>
-                    다 했어요
+                <Button color="#3888FF" textColor="#fff" size="full" isDisabled={step.value !== "workout" && checked.length === 0} onClick={handleOnClickSucess}>
+                    {step.value === "workout" ? "운동 시작" : "다 했어요"}
                 </Button>
             </BtnBoxStyled>
         </ContainerStyled>

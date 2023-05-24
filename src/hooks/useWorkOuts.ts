@@ -11,32 +11,31 @@ interface WorkOutProps {
 
 export const useWorkOuts = () => {
     const workOutRef = useRef(ROUTINE_WORKOUT_DATES);
-    const [checkd, setChecked] = useState<number[]>([]);
+    const [checked, setChecked] = useState<number[]>([]);
     const [workOuts, setWorkOuts] = useState<WorkOutProps[]>(workOutRef.current);
 
     const handleOnClickCheckWorkdOut = (id: number) => {
-        if (checkd.includes(id)) {
+        if (checked.includes(id)) {
             setChecked((checkd) => checkd.filter((item) => item != id));
         } else {
             setChecked((checkd) => [...checkd, id]);
         }
-
-        console.log(checkd, id);
     };
 
     useEffect(() => {
         const newWorkOuts = workOutRef.current.map((item) => {
-            if (checkd.includes(item.id)) {
+            if (checked.includes(item.id)) {
                 return { ...item, isActive: true };
             } else {
                 return { ...item, isActive: false };
             }
         });
         setWorkOuts(newWorkOuts);
-    }, [checkd]);
+    }, [checked]);
 
     return {
         workOuts,
+        checked,
         handleOnClickCheckWorkdOut,
     };
 };

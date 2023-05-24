@@ -17,6 +17,14 @@ interface ButtonStyledProps {
     disabled?: boolean;
 }
 
+const Button = ({ size, color, textColor, isDisabled, onClick, children }: ButtonProps) => {
+    return (
+        <ButtonStyled $color={color} $textColor={textColor} $size={size ?? "md"} disabled={isDisabled} onClick={onClick}>
+            {children}
+        </ButtonStyled>
+    );
+};
+
 const ButtonStyled = styled.button<ButtonStyledProps>`
     cursor: pointer;
     display: flex;
@@ -69,19 +77,5 @@ const ButtonStyled = styled.button<ButtonStyledProps>`
         }
     }};
 `;
-
-/* ${({size}) => { */
-/* if(size === "md") */
-/* }} */
-
-/* padding: 8px 10px; */
-
-const Button = ({ size, color, textColor, isDisabled, onClick, children }: ButtonProps) => {
-    return (
-        <ButtonStyled $color={color} $textColor={textColor} $size={size ?? "md"} disabled={isDisabled} onClick={onClick}>
-            {children}
-        </ButtonStyled>
-    );
-};
 
 export default Button;

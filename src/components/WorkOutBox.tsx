@@ -6,15 +6,18 @@ interface WorkOutBoxStyledProps {
 }
 
 interface WorkOutBoxProps extends WorkOutItemProps {
+    step: string;
     onClick: any;
 }
 
-const WorkOutBox = ({ info, isActive, onClick }: WorkOutBoxProps) => {
+const WorkOutBox = ({ info, isActive, step, onClick }: WorkOutBoxProps) => {
     return (
         <WorkOutBoxStyled $isActive={isActive}>
-            <div className="checkBoxWrapper">
-                <div className="checkBox" onClick={onClick} />
-            </div>
+            {step === "start" && (
+                <div className="checkBoxWrapper">
+                    <div className="checkBox" onClick={onClick} />
+                </div>
+            )}
             <WorkOutItem info={info} key={info.id} isActive={isActive} />
         </WorkOutBoxStyled>
     );

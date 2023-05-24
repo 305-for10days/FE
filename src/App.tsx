@@ -8,9 +8,9 @@ import LoginPage from "./pages/LoginPage";
 import { useEffect } from "react";
 import { authLoginState } from "./recoil/selectors/authSelector";
 import RoutinePage from "./pages/RoutinePage";
-import RoutineDetailPage from "./pages/RoutineDetailPage";
 import WorkOutPage from "./pages/WorkOutPage";
 import LoginCallbackPage from "./pages/LoginCallbackPage";
+import WorkOutResultPage from "./pages/WorkOutResultPage";
 
 function App() {
     const authState = useRecoilValue(authLoginState);
@@ -30,8 +30,8 @@ function App() {
                             <Route path="/info" element={<InfoPage />} />
                             <Route path="/info/result" element={<InfoResultPage />} />
                             <Route path="/routine" element={<RoutinePage />} />
-                            <Route path="/routine/:id" element={<RoutineDetailPage />} />
-                            <Route path="/routine/:id/workout" element={<WorkOutPage />} />
+                            <Route path="/routine/:id" element={<WorkOutPage />} />
+                            <Route path="/routine/:id/result" element={<WorkOutResultPage />} />
                         </>
                     ) : (
                         <>

@@ -4,7 +4,7 @@ import WorkOutItem from "../components/WorkOutItem";
 import Button from "../components/Button";
 import { useLocation, useNavigate } from "react-router-dom";
 
-const RoutineDetailPage = () => {
+const WorkOutResultPage = () => {
     const navigate = useNavigate();
     const location = useLocation();
     const id = location.pathname.split("/")[2];
@@ -16,7 +16,10 @@ const RoutineDetailPage = () => {
     return (
         <ContainerStyled>
             <ContentBoxStyled>
-                <h1 className="title">체지방 감소</h1>
+                <div className="titleGroup">
+                    <h1 className="title">오늘 운동 어땟나요?</h1>
+                    <p>좌우로 스와이프</p>
+                </div>
                 <WorkOutListBoxStyled>
                     {ROUTINE_WORKOUT_DATES.map((info) => (
                         <WorkOutItem info={info} key={info.id} />
@@ -46,17 +49,29 @@ const ContentBoxStyled = styled.div`
     padding-top: 70px;
     text-align: center;
 
-    & > .title {
-        margin: 0;
-        font-size: 24px;
-        color: #3888ff;
+    & > .titleGroup {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+
+        & > .title {
+            margin: 0;
+            font-size: 24px;
+            color: #3888ff;
+        }
+
+        & > p {
+            margin: 0;
+            font-size: 12px;
+        }
     }
 `;
 
 const WorkOutListBoxStyled = styled.div`
     /* height: 100%; */
     display: flex;
-    padding: 36px 0 26px;
+    align-items: center;
+    padding: 10px 0 26px;
     flex-direction: column;
     gap: 8px;
 `;
@@ -66,4 +81,4 @@ const BtnBoxStyled = styled.div`
     width: 100%;
 `;
 
-export default RoutineDetailPage;
+export default WorkOutResultPage;
