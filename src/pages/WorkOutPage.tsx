@@ -1,31 +1,24 @@
 import styled from "styled-components";
-import { ROUTINE_WORKOUT_DATES } from "../constants/data";
-import WorkOutItem from "../components/WorkOutItem";
 import Button from "../components/Button";
-import { useLocation, useNavigate } from "react-router-dom";
+import WorkOutBox from "../components/WorkOutBox";
+import { useWorkOuts } from "../hooks/useWorkOuts";
 
-const RoutineDetailPage = () => {
-    const navigate = useNavigate();
-    const location = useLocation();
-    const id = location.pathname.split("/")[2];
-
-    const handleOnClickWorkOutPage = () => {
-        navigate(`/routine/${id}/workout`);
-    };
+const WorkOutPage = () => {
+    const { workOuts, handleOnClickCheckWorkdOut } = useWorkOuts(1);
 
     return (
         <ContainerStyled>
             <ContentBoxStyled>
                 <h1 className="title">체지방 감소</h1>
                 <WorkOutListBoxStyled>
-                    {ROUTINE_WORKOUT_DATES.map((info) => (
-                        <WorkOutItem info={info} key={info.id} />
+                    {workOuts.map((info) => (
+                        <WorkOutBox info={info} isActive={info.isActive} key={info.id} onClick={() => handleOnClickCheckWorkdOut(info.id)} />
                     ))}
                 </WorkOutListBoxStyled>
             </ContentBoxStyled>
             <BtnBoxStyled>
-                <Button color="#3888FF" textColor="#fff" size="full" onClick={handleOnClickWorkOutPage}>
-                    운동 시작
+                <Button color="#3888FF" textColor="#fff" size="full" isDisabled={true}>
+                    다 했어요
                 </Button>
             </BtnBoxStyled>
         </ContainerStyled>
@@ -66,4 +59,4 @@ const BtnBoxStyled = styled.div`
     width: 100%;
 `;
 
-export default RoutineDetailPage;
+export default WorkOutPage;

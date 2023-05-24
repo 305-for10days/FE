@@ -1,6 +1,6 @@
 import { useRecoilValue } from "recoil";
 import "./App.css";
-import { BrowserRouter, Route, Routes, useLocation, useNavigate } from "react-router-dom";
+import { BrowserRouter, Route, Routes, useNavigate } from "react-router-dom";
 import InfoPage from "./pages/InfoPage";
 import InfoResultPage from "./pages/InfoResultPage";
 import MainPage from "./pages/MainPage";
@@ -9,6 +9,8 @@ import { useEffect } from "react";
 import { authLoginState } from "./recoil/selectors/authSelector";
 import RoutinePage from "./pages/RoutinePage";
 import RoutineDetailPage from "./pages/RoutineDetailPage";
+import WorkOutPage from "./pages/WorkOutPage";
+import LoginCallbackPage from "./pages/LoginCallbackPage";
 
 function App() {
     const authState = useRecoilValue(authLoginState);
@@ -29,10 +31,12 @@ function App() {
                             <Route path="/info/result" element={<InfoResultPage />} />
                             <Route path="/routine" element={<RoutinePage />} />
                             <Route path="/routine/:id" element={<RoutineDetailPage />} />
+                            <Route path="/routine/:id/workout" element={<WorkOutPage />} />
                         </>
                     ) : (
                         <>
                             <Route path="/" element={<LoginPage />} />
+                            <Route path="/login/callback" element={<LoginCallbackPage />} />
                         </>
                     )}
                     <Route path="*" element={<RedirectComponent />} />

@@ -1,6 +1,18 @@
 import styled, { css } from "styled-components";
 
-interface WorkOutItem {
+const WorkOutItem = ({ info, isActive }: WorkOutItemProps) => {
+    return (
+        <WorkOutItemStyled $isActive={isActive || false}>
+            <img src="https://via.placeholder.com/119x84" alt="" />
+            <div className="infoGroup">
+                <div className="title">{info.title}</div>
+                <p className="desc">30초 3세트</p>
+            </div>
+        </WorkOutItemStyled>
+    );
+};
+
+export interface WorkOutItemProps {
     info: {
         id: number;
         title: string;
@@ -10,11 +22,11 @@ interface WorkOutItem {
     isActive?: boolean;
 }
 
-interface WorkOutProps {
+interface WorkOutStyledProps {
     $isActive: boolean;
 }
 
-const WorkOutItemStyled = styled.div<WorkOutProps>`
+const WorkOutItemStyled = styled.div<WorkOutStyledProps>`
     /* cursor: pointer; */
     display: flex;
     gap: 32px;
@@ -23,6 +35,7 @@ const WorkOutItemStyled = styled.div<WorkOutProps>`
     height: 100px;
     border: none;
     border-radius: 8px;
+    border: 1px solid #fafafa;
     background-color: #fafafa;
 
     & > img {
@@ -51,17 +64,5 @@ const WorkOutItemStyled = styled.div<WorkOutProps>`
             border-color: #3888ff;
         `}
 `;
-
-const WorkOutItem = ({ info, isActive }: WorkOutItem) => {
-    return (
-        <WorkOutItemStyled $isActive={isActive || false}>
-            <img src="https://via.placeholder.com/119x84" alt="" />
-            <div className="infoGroup">
-                <div className="title">{info.title}</div>
-                <p className="desc">30초 3세트</p>
-            </div>
-        </WorkOutItemStyled>
-    );
-};
 
 export default WorkOutItem;

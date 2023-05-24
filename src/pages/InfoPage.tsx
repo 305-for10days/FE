@@ -5,57 +5,38 @@ import RadioBox from "../components/RadioBox";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import Button from "../components/Button";
-
-const ContainerStyled = styled.div`
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    padding: 0 24px;
-    height: 100vh;
-    background-color: #fff;
-`;
-
-const ContentBoxStyled = styled.div`
-    flex: 1;
-`;
-
-const BtnBoxStyled = styled.div`
-    padding: 20px 0 36px;
-    width: 100%;
-`;
-
-interface infoAddProps {
-    [key: string]: any;
-    gender: "M" | "W" | "";
-    height?: number;
-    weight?: number;
-    severalTimesWeek: number;
-    severalTimes: number;
-}
-
-const initialize: infoAddProps = {
-    gender: "",
-    height: 0,
-    weight: 0,
-    severalTimesWeek: 0,
-    severalTimes: 0,
-};
+import { InfoAddProps } from "../@types/UserType";
+import { useInfoState } from "../recoil/atoms/useInfoState";
+import { useRecoilState } from "recoil";
 
 const InfoPage = () => {
     const navigate = useNavigate();
-    const [infoData, setInfoData] = useState<infoAddProps>(initialize);
+    const [infoData, setInfoDate] = useRecoilState<InfoAddProps>(useInfoState);
     const [isDisabled, setIsDisabled] = useState<boolean>(true);
 
     const handleOnChange = (name: string, value: number) => {
-        setInfoData({ ...infoData, [name]: value });
+        setInfoDate({ ...infoData, [name]: value });
+    };
+
+    /*
+     * BMI 계산
+     */
+    const calculateBmi = (weight: number, height: number) => {
+        const bmi = weight / (height / 100) ** 2;
+        return bmi.toFixed(1);
     };
 
     const handleNextPage = () => {
+        const bmi = calculateBmi(Number(infoData.weight), Number(infoData.height));
+        setInfoDate({ ...infoData, bmi: bmi });
         navigate("/info/result");
     };
 
     useEffect(() => {
         for (const key in infoData) {
+            if (key === "bmi") {
+                continue;
+            }
             if (infoData[key] === 0 || !infoData[key]) {
                 setIsDisabled(true);
                 return;
@@ -82,7 +63,7 @@ const InfoPage = () => {
                     <InputBox value={infoData.severalTimesWeek} name="severalTimesWeek" handle={handleOnChange}>
                         회/주
                     </InputBox>
-                    <InputBox value={infoData.severalTimes} name="severalTimes" handle={handleOnChange}>
+                    <InputBox value={infoData.minutePerWorkout} name="minutePerWorkout" handle={handleOnChange}>
                         분/회
                     </InputBox>
                 </InputGroup>
@@ -95,5 +76,23 @@ const InfoPage = () => {
         </ContainerStyled>
     );
 };
+
+const ContainerStyled = styled.div`
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    padding: 0 24px;
+    height: 100vh;
+    background-color: #fff;
+`;
+
+const ContentBoxStyled = styled.div`
+    flex: 1;
+`;
+
+const BtnBoxStyled = styled.div`
+    padding: 20px 0 36px;
+    width: 100%;
+`;
 
 export default InfoPage;

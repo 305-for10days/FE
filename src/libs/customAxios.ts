@@ -1,10 +1,13 @@
 import axios from "axios";
 
-const END_POINT = "https://localhost.8080";
+// const END_POINT = "https://localhost.8080";
+const PRD_URL = "";
+const DEV_URL = "http://southoftheriver.synology.me:8082";
 
 export const customAxios = axios.create({
-    baseURL: END_POINT,
+    baseURL: DEV_URL,
     headers: {
-        Authorization: "",
+        "Content-Type": "application/json",
+        Authorization: "bearer " + localStorage.getItem("token") || "",
     },
 });

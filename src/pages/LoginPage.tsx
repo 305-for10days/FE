@@ -1,8 +1,26 @@
-import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import Button from "../components/Button";
-import { useSetRecoilState } from "recoil";
-import { authLoginState } from "../recoil/selectors/authSelector";
+
+const LoginPage = () => {
+    const handleKakaoLogin = async () => {
+        location.href = "http://southoftheriver.synology.me:8082/oauth2/authorization/kakao";
+    };
+
+    return (
+        <ContainerStyle>
+            <LogoImageBox>
+                <img src="/logo.svg" />
+            </LogoImageBox>
+
+            <ButtonGroupStyled>
+                <Button color="#ffe144" size="full" onClick={handleKakaoLogin}>
+                    <img src={"/icons/kakaoicon.png"} alt="카카오 로고 이미지" width={26} />
+                    카카오톡으로 로그인
+                </Button>
+            </ButtonGroupStyled>
+        </ContainerStyle>
+    );
+};
 
 const ContainerStyle = styled.div`
     position: relative;
@@ -25,31 +43,5 @@ const ButtonGroupStyled = styled.div`
     padding: 0 24px;
     width: 100%;
 `;
-
-const LoginPage = () => {
-    const navigate = useNavigate();
-    const setAuthState = useSetRecoilState(authLoginState);
-
-    const handleKakaoLogin = () => {
-        localStorage.setItem("token", "123");
-        setAuthState({ email: "123", isLogin: true });
-        navigate("/info");
-    };
-
-    return (
-        <ContainerStyle>
-            <LogoImageBox>
-                <img src="/logo.svg" />
-            </LogoImageBox>
-
-            <ButtonGroupStyled>
-                <Button color="#ffe144" size="full" onClick={handleKakaoLogin}>
-                    <img src={"/icons/kakaoicon.png"} alt="카카오 로고 이미지" width={26} />
-                    카카오톡으로 로그인
-                </Button>
-            </ButtonGroupStyled>
-        </ContainerStyle>
-    );
-};
 
 export default LoginPage;
