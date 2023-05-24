@@ -9,7 +9,7 @@ interface WorkOutProps {
     isActive?: boolean;
 }
 
-export const useWorkOuts = (id: number) => {
+export const useWorkOuts = () => {
     const workOutRef = useRef(ROUTINE_WORKOUT_DATES);
     const [checkd, setChecked] = useState<number[]>([]);
     const [workOuts, setWorkOuts] = useState<WorkOutProps[]>(workOutRef.current);

@@ -1,10 +1,5 @@
-import React from "react";
 import styled, { css } from "styled-components";
 import WorkOutItem, { WorkOutItemProps } from "./WorkOutItem";
-
-interface WorkOutProps {
-    children: React.ReactNode;
-}
 
 interface WorkOutBoxStyledProps {
     $isActive?: boolean;

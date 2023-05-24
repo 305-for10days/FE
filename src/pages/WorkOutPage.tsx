@@ -4,7 +4,7 @@ import WorkOutBox from "../components/WorkOutBox";
 import { useWorkOuts } from "../hooks/useWorkOuts";
 
 const WorkOutPage = () => {
-    const { workOuts, handleOnClickCheckWorkdOut } = useWorkOuts(1);
+    const { workOuts, handleOnClickCheckWorkdOut } = useWorkOuts();
 
     return (
         <ContainerStyled>
