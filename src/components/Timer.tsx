@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import sound from "../assets/sounds/ride.wav";
+import { styled } from "styled-components";
 
 interface timerProps {
     minutes: string;
@@ -12,7 +13,7 @@ const Timer = () => {
     const [time, setTime] = useState<timerProps>({
         minutes: "00",
         seconds: "00",
-        milliseconds: "000",
+        milliseconds: "00",
     });
     const intervalRef = useRef<number>(0);
     const audioRef = useRef<HTMLAudioElement>(null);
@@ -28,7 +29,9 @@ const Timer = () => {
             } else if (value < 100) {
                 formatValue = "0" + String(value);
             }
+            formatValue = formatValue.substring(0, 2);
         }
+
         return formatValue;
     };
 
@@ -45,7 +48,7 @@ const Timer = () => {
                     milliseconds: timerFormat(timerDate.getMilliseconds(), "milliseconds"),
                 };
                 setTime(newTime);
-            }, 100);
+            }, 90);
             intervalRef.current = Number(intervalID);
         }
     };
@@ -53,6 +56,14 @@ const Timer = () => {
     const stopTimer = () => {
         clearInterval(intervalRef.current);
         setIsStart(false);
+    };
+
+    const handleOnClickTimer = () => {
+        if (isStart) {
+            stopTimer();
+        } else {
+            startTimer();
+        }
     };
 
     useEffect(() => {
@@ -63,15 +74,32 @@ const Timer = () => {
     }, [time]);
 
     return (
-        <div style={{ color: "black" }}>
-            <div>
-                {time.minutes}:{time.seconds}:{time.milliseconds}
-            </div>
-            <audio ref={audioRef} src={sound} />
-            <button onClick={startTimer}>시작</button>
-            <button onClick={stopTimer}>그만</button>
-        </div>
+        <TimerBoxStyled onClick={handleOnClickTimer}>
+            <p>
+                {time.seconds}:{time.milliseconds}
+                <audio ref={audioRef} src={sound} />
+            </p>
+        </TimerBoxStyled>
     );
 };
+
+const TimerBoxStyled = styled.div`
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100px;
+    border: 1px solid #3888ff;
+    border-radius: 8px;
+    text-align: center;
+
+    & > p {
+        margin: 0;
+        width: 200px;
+        color: #3888ff;
+        font-size: 50px;
+    }
+`;
 
 export default Timer;

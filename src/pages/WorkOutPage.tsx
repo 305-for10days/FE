@@ -4,6 +4,7 @@ import WorkOutBox from "../components/WorkOutBox";
 import { useWorkOuts } from "../hooks/useWorkOuts";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useState } from "react";
+import Timer from "../components/Timer";
 
 interface StepProps {
     value: "workout" | "start";
@@ -37,6 +38,7 @@ const WorkOutPage = () => {
                     ))}
                 </WorkOutListBoxStyled>
             </ContentBoxStyled>
+            {step.value === "start" && <Timer />}
             <BtnBoxStyled>
                 <Button color="#3888FF" textColor="#fff" size="full" isDisabled={step.value !== "workout" && checked.length === 0} onClick={handleOnClickSucess}>
                     {step.value === "workout" ? "운동 시작" : "다 했어요"}

@@ -42,6 +42,7 @@ const WorkOutItemStyled = styled.div<WorkOutStyledProps>`
 
     & > img {
         border-radius: 8px;
+        -webkit-user-drag: none;
     }
 
     & > .infoGroup {

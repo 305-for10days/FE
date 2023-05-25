@@ -60,18 +60,18 @@ interface SwipeStyleProps {
 const SwipeBoxStyled = styled.div<SwipeStyleProps>`
     padding: 0 21px;
     width: 100%;
-    border: none;
+    border: 1px solid #fff;
     border-radius: 8px;
 
     ${({ $swipe }) => {
         if ($swipe < 0) {
             return css`
-                border: 1px solid #fb5e5e;
+                border-color: #fb5e5e;
                 background-color: #fb5e5e;
             `;
         } else if ($swipe > 0) {
             return css`
-                border: 1px solid #3888ff;
+                border-color: #3888ff;
                 background-color: #3888ff;
             `;
         }
