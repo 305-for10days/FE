@@ -30,7 +30,7 @@ const MainPage = () => {
 
     const handleOnClickLogout = () => {
         localStorage.removeItem("token");
-        setAuthState({ ...initialize, isLogin: false });
+        setAuthState({ ...initialize, isLoggedIn: false, token: "" });
         navigate("/");
     };
 

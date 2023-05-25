@@ -16,7 +16,8 @@ const InfoResultPage = () => {
 
     const hendleMainPage = async () => {
         const res = await fetchAddUserInfo(infoDate);
-        if (res.data === "ok") {
+
+        if (String(res.data.toLowerCase()) === "ok") {
             setAuthState({ ...authState, isFirstLogin: false });
             localStorage.setItem("firstLogin", "false");
             navigate("/main");

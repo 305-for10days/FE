@@ -1,10 +1,10 @@
 import { useEffect } from "react";
-import { useNavigate, useSearchParams } from "react-router-dom";
+import { useSearchParams } from "react-router-dom";
 import { authLoginState } from "../recoil/selectors/authSelector";
 import { useRecoilState } from "recoil";
 
 const LoginCallbackPage = () => {
-    const navigate = useNavigate();
+    // const navigate = useNavigate();
     const [searchParams] = useSearchParams();
     const jwt = searchParams.get("jwt");
 
@@ -13,10 +13,10 @@ const LoginCallbackPage = () => {
     useEffect(() => {
         if (jwt) {
             localStorage.setItem("token", jwt);
-            setAuthState({ ...authState, email: jwt, isLogin: true });
-            navigate("/main");
+            setAuthState({ ...authState, isLoggedIn: true, token: jwt });
+            location.href = "/main";
         } else {
-            navigate("/");
+            location.href = "/";
         }
     }, []);
 
