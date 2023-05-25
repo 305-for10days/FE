@@ -25,7 +25,8 @@ const LoginPage = () => {
 const ContainerStyle = styled.div`
     position: relative;
     height: 100vh;
-    background-color: var(--main-color);
+    /* background-color: var(--main-color); */
+    background-color: #fff;
 `;
 
 const LogoImageBox = styled.div`

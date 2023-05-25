@@ -11,6 +11,7 @@ import RoutinePage from "./pages/RoutinePage";
 import WorkOutPage from "./pages/WorkOutPage";
 import LoginCallbackPage from "./pages/LoginCallbackPage";
 import WorkOutResultPage from "./pages/WorkOutResultPage";
+import WorkOutSharePage from "./pages/WorkOutSharePage";
 
 function App() {
     const authState = useRecoilValue(authLoginState);
@@ -38,6 +39,7 @@ function App() {
                                     <Route path="/routine" element={<RoutinePage />} />
                                     <Route path="/routine/:id" element={<WorkOutPage />} />
                                     <Route path="/routine/:id/result" element={<WorkOutResultPage />} />
+                                    <Route path="/result/:id" element={<WorkOutSharePage />} />
                                 </>
                             )}
                         </>

@@ -11,3 +11,12 @@ export const fetchAddUserInfo = async (data: InfoAddProps) => {
 
     return res;
 };
+
+export const fetchUserProfileCheck = async () => {
+    const res = await customAxios({
+        method: "get",
+        url: "/api/signdUp",
+    });
+
+    return res;
+};

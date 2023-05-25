@@ -9,7 +9,7 @@ interface AuthentificationProps {
 
 export const initialize: AuthentificationProps = {
     email: localStorage.getItem("token") || "",
-    isFirstLogin: !localStorage.getItem("firstLogin") ? true : false,
+    isFirstLogin: false,
     isLoggedIn: localStorage.getItem("token") ? true : false,
     token: "",
 };

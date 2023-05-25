@@ -2,7 +2,14 @@ import { useRef, useState } from "react";
 import { css, styled } from "styled-components";
 import WorkOutItem, { WorkOutItemProps } from "./WorkOutItem";
 
-const SwipeWorkOutBox = ({ info }: WorkOutItemProps) => {
+interface SwipeWorkOutProps extends WorkOutItemProps {
+    isChecked: boolean;
+    isComplete: boolean;
+    changeWork: any;
+    changeComplete: any;
+}
+
+const SwipeWorkOutBox = ({ info, changeWork, changeComplete, isComplete, isChecked }: SwipeWorkOutProps) => {
     const ref = useRef<HTMLDivElement>(null);
     const xRef = useRef(0);
     const [swipeValue, setSwipeValue] = useState(0);
@@ -36,12 +43,31 @@ const SwipeWorkOutBox = ({ info }: WorkOutItemProps) => {
     };
 
     const dragEnd = () => {
-        setIsDrag(false);
+        if (isDrag) {
+            if (-maxSwipe !== swipeValue && swipeValue !== maxSwipe) {
+                setSwipeValue(0);
+            }
+            if (ref.current) ref.current.style.transform = `translateX(${swipeValue}px)`;
 
-        if (-maxSwipe !== swipeValue && swipeValue !== maxSwipe) {
-            setSwipeValue(0);
+            console.log(isChecked);
+
+            if (swipeValue === maxSwipe) {
+                if (isChecked) {
+                    changeWork();
+                }
+                if (!isComplete) {
+                    changeComplete();
+                }
+            } else if (swipeValue === -maxSwipe) {
+                if (!isChecked) {
+                    changeWork();
+                }
+                if (isComplete) {
+                    changeComplete();
+                }
+            }
         }
-        if (ref.current) ref.current.style.transform = `translateX(${swipeValue}px)`;
+        setIsDrag(false);
     };
 
     return (

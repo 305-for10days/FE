@@ -5,6 +5,8 @@ import { useWorkOuts } from "../hooks/useWorkOuts";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import Timer from "../components/Timer";
+import { useSetRecoilState } from "recoil";
+import { workOutCompleteState } from "../recoil/atoms/workOutCompleteState";
 
 interface StepProps {
     value: "workout" | "start";
@@ -14,6 +16,7 @@ const WorkOutPage = () => {
     const location = useLocation();
     const navigate = useNavigate();
     const id = location.pathname.split("/")[2];
+    const setIsWorkOutComplete = useSetRecoilState(workOutCompleteState);
     const [step, setStep] = useState<StepProps>({ value: "workout" });
     const { workOuts, checked, handleOnClickCheckWorkdOut } = useWorkOuts();
 
@@ -24,6 +27,7 @@ const WorkOutPage = () => {
         }
         if (step.value === "start") {
             // api 호출
+            setIsWorkOutComplete({ isCompletedIn: true });
             navigate(`/routine/${id}/result`);
         }
     };

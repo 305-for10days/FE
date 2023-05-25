@@ -80,3 +80,16 @@ export const WORKOUT_RECORD_DATAS = [
         createDate: new Date(),
     },
 ];
+
+export const EMOJI_DATAS = [
+    {
+        id: 1,
+        title: "행복",
+        src: "/emojis/slightly-smiling-face.png",
+    },
+    { id: 2, title: "휴...", src: "/emojis/dizzy-face.png" },
+    { id: 3, title: "힘드러...", src: "/emojis/crying-face.png" },
+    { id: 4, title: "eazy~", src: "/emojis/beaming-face.png" },
+    { id: 5, title: "우엑~", src: "/emojis/face-vomiting.png" },
+    { id: 6, title: "헤헤헤", src: "/emojis/melting-face.png" },
+];
