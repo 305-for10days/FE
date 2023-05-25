@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { css, styled } from "styled-components";
 import WorkOutItem, { WorkOutItemProps } from "./WorkOutItem";
 
@@ -35,7 +35,7 @@ const SwipeWorkOutBox = ({ info }: WorkOutItemProps) => {
         }
     };
 
-    const dragEnd = (e: any) => {
+    const dragEnd = () => {
         setIsDrag(false);
 
         if (-maxSwipe !== swipeValue && swipeValue !== maxSwipe) {

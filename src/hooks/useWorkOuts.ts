@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { ROUTINE_WORKOUT_DATES } from "../constants/data";
+import { ROUTINE_WORKOUT_DATAS } from "../constants/data";
 
 interface WorkOutProps {
     id: number;
@@ -10,7 +10,7 @@ interface WorkOutProps {
 }
 
 export const useWorkOuts = () => {
-    const workOutRef = useRef(ROUTINE_WORKOUT_DATES);
+    const workOutRef = useRef(ROUTINE_WORKOUT_DATAS);
     const [checked, setChecked] = useState<number[]>([]);
     const [workOuts, setWorkOuts] = useState<WorkOutProps[]>(workOutRef.current);
 

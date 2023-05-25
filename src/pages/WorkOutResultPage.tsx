@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { useLocation, useNavigate } from "react-router-dom";
-import { ROUTINE_WORKOUT_DATES } from "../constants/data";
+import { ROUTINE_WORKOUT_DATAS } from "../constants/data";
 import Button from "../components/Button";
 import SwipeWorkOutBox from "../components/SwipeWorkOutBox";
 
@@ -21,7 +21,7 @@ const WorkOutResultPage = () => {
                     <p>좌우로 스와이프</p>
                 </div>
                 <WorkOutListBoxStyled>
-                    {ROUTINE_WORKOUT_DATES.map((info) => (
+                    {ROUTINE_WORKOUT_DATAS.map((info) => (
                         <SwipeWorkOutBox key={info.id} info={info} />
                     ))}
                 </WorkOutListBoxStyled>

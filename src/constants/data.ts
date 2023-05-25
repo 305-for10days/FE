@@ -21,7 +21,7 @@ export const ROUTINE_DATAS = [
     },
 ];
 
-export const ROUTINE_WORKOUT_DATES = [
+export const ROUTINE_WORKOUT_DATAS = [
     {
         id: 1,
         title: "플랭크",
@@ -51,5 +51,32 @@ export const ROUTINE_WORKOUT_DATES = [
         title: "걷기 5분",
         times: 30,
         set: 3,
+    },
+];
+
+export const WORKOUT_RECORD_DATAS = [
+    {
+        id: 1,
+        kcal: 340,
+        title: "체지방 감소",
+        time: 50,
+        image: "",
+        createDate: new Date(),
+    },
+    {
+        id: 2,
+        kcal: 120,
+        title: "하체",
+        time: 30,
+        image: "",
+        createDate: new Date(),
+    },
+    {
+        id: 3,
+        kcal: 90,
+        title: "코어",
+        time: 20,
+        image: "",
+        createDate: new Date(),
     },
 ];
