@@ -1,8 +1,8 @@
 import styled from "styled-components";
-import { ROUTINE_WORKOUT_DATES } from "../constants/data";
-import WorkOutItem from "../components/WorkOutItem";
-import Button from "../components/Button";
 import { useLocation, useNavigate } from "react-router-dom";
+import { ROUTINE_WORKOUT_DATES } from "../constants/data";
+import Button from "../components/Button";
+import SwipeWorkOutBox from "../components/SwipeWorkOutBox";
 
 const WorkOutResultPage = () => {
     const navigate = useNavigate();
@@ -22,13 +22,13 @@ const WorkOutResultPage = () => {
                 </div>
                 <WorkOutListBoxStyled>
                     {ROUTINE_WORKOUT_DATES.map((info) => (
-                        <WorkOutItem info={info} key={info.id} />
+                        <SwipeWorkOutBox key={info.id} info={info} />
                     ))}
                 </WorkOutListBoxStyled>
             </ContentBoxStyled>
             <BtnBoxStyled>
-                <Button color="#3888FF" textColor="#fff" size="full" onClick={handleOnClickWorkOutPage}>
-                    운동 시작
+                <Button color="#3888FF" textColor="#fff" size="full" isDisabled={true} onClick={handleOnClickWorkOutPage}>
+                    다 했어요
                 </Button>
             </BtnBoxStyled>
         </ContainerStyled>

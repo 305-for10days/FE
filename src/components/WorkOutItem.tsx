@@ -1,8 +1,19 @@
 import styled, { css } from "styled-components";
 
-const WorkOutItem = ({ info, isActive }: WorkOutItemProps) => {
+export interface WorkOutItemProps {
+    info: {
+        id: number;
+        title: string;
+        times: number;
+        set: number;
+    };
+    isActive?: boolean;
+    isCancel?: boolean;
+}
+
+const WorkOutItem = ({ info, isActive, isCancel }: WorkOutItemProps) => {
     return (
-        <WorkOutItemStyled $isActive={isActive || false}>
+        <WorkOutItemStyled $isActive={isActive || false} $isCancel={isCancel || false}>
             <img src="https://via.placeholder.com/119x84" alt="" />
             <div className="infoGroup">
                 <div className="title">{info.title}</div>
@@ -12,18 +23,9 @@ const WorkOutItem = ({ info, isActive }: WorkOutItemProps) => {
     );
 };
 
-export interface WorkOutItemProps {
-    info: {
-        id: number;
-        title: string;
-        times: number;
-        set: number;
-    };
-    isActive?: boolean;
-}
-
 interface WorkOutStyledProps {
     $isActive: boolean;
+    $isCancel: boolean;
 }
 
 const WorkOutItemStyled = styled.div<WorkOutStyledProps>`
@@ -62,6 +64,13 @@ const WorkOutItemStyled = styled.div<WorkOutStyledProps>`
         css`
             background-color: #ecf3fe;
             border-color: #3888ff;
+        `}
+
+    ${({ $isCancel }) =>
+        $isCancel &&
+        css`
+            background-color: #feecec;
+            border-color: #c11b1c;
         `}
 `;
 
