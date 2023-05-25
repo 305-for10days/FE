@@ -25,13 +25,21 @@ function App() {
                 <Routes>
                     {authState.isLogin ? (
                         <>
-                            <Route path="/" element={<MainPage />} />
-                            <Route path="/main" element={<MainPage />} />
-                            <Route path="/info" element={<InfoPage />} />
-                            <Route path="/info/result" element={<InfoResultPage />} />
-                            <Route path="/routine" element={<RoutinePage />} />
-                            <Route path="/routine/:id" element={<WorkOutPage />} />
-                            <Route path="/routine/:id/result" element={<WorkOutResultPage />} />
+                            {authState.isFirstLogin ? (
+                                <>
+                                    <Route path="/" element={<InfoPage />} />
+                                    <Route path="/info" element={<InfoPage />} />
+                                    <Route path="/info/result" element={<InfoResultPage />} />
+                                </>
+                            ) : (
+                                <>
+                                    <Route path="/" element={<MainPage />} />
+                                    <Route path="/main" element={<MainPage />} />
+                                    <Route path="/routine" element={<RoutinePage />} />
+                                    <Route path="/routine/:id" element={<WorkOutPage />} />
+                                    <Route path="/routine/:id/result" element={<WorkOutResultPage />} />
+                                </>
+                            )}
                         </>
                     ) : (
                         <>

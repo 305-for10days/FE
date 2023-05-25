@@ -3,6 +3,7 @@ import Button from "../components/Button";
 import { useNavigate } from "react-router-dom";
 import { useSetRecoilState } from "recoil";
 import { authLoginState } from "../recoil/selectors/authSelector";
+import { initialize } from "../recoil/atoms/authState";
 
 const ContainerStyled = styled.div`
     background: #fff;
@@ -29,7 +30,7 @@ const MainPage = () => {
 
     const handleOnClickLogout = () => {
         localStorage.removeItem("token");
-        setAuthState({ email: "", isLogin: false });
+        setAuthState({ ...initialize, isLogin: false });
         navigate("/");
     };
 

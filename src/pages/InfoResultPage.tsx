@@ -1,20 +1,24 @@
 import styled from "styled-components";
 import Button from "../components/Button";
 import { useNavigate } from "react-router-dom";
-import { useRecoilValue } from "recoil";
+import { useRecoilState, useRecoilValue } from "recoil";
 import { userInfoDisabledSelector } from "../recoil/selectors/useInfoDisableSelector";
 import { useEffect } from "react";
 import { fetchAddUserInfo } from "../api/UserAPI";
 import { useInfoState } from "../recoil/atoms/useInfoState";
+import { authLoginState } from "../recoil/selectors/authSelector";
 
 const InfoResultPage = () => {
     const navigate = useNavigate();
     const isUserInfoDisabled = useRecoilValue(userInfoDisabledSelector);
+    const [authState, setAuthState] = useRecoilState(authLoginState);
     const infoDate = useRecoilValue(useInfoState);
 
     const hendleMainPage = async () => {
         const res = await fetchAddUserInfo(infoDate);
         if (res.data === "ok") {
+            setAuthState({ ...authState, isFirstLogin: false });
+            localStorage.setItem("firstLogin", "false");
             navigate("/main");
         }
     };
