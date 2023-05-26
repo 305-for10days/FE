@@ -1,4 +1,4 @@
-import { useRecoilValue } from "recoil";
+import { useRecoilValue, useSetRecoilState } from "recoil";
 import "./App.css";
 import { BrowserRouter, Route, Routes, useNavigate } from "react-router-dom";
 import InfoPage from "./pages/InfoPage";
@@ -12,12 +12,18 @@ import WorkOutPage from "./pages/WorkOutPage";
 import LoginCallbackPage from "./pages/LoginCallbackPage";
 import WorkOutResultPage from "./pages/WorkOutResultPage";
 import WorkOutSharePage from "./pages/WorkOutSharePage";
+import { workOutState } from "./recoil/atoms/workOutState";
+import { fetchWorkOutsList } from "./api/WorkOutAPI";
 
 function App() {
     const authState = useRecoilValue(authLoginState);
+    const setWorkOutInfoState = useSetRecoilState(workOutState);
 
     useEffect(() => {
-        console.log(authState);
+        (async () => {
+            const res = await fetchWorkOutsList();
+            if (res.status === 2) setWorkOutInfoState(res.data);
+        })();
     }, [authState]);
 
     return (

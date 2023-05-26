@@ -7,10 +7,12 @@ import { useEffect } from "react";
 import { fetchAddUserInfo } from "../api/UserAPI";
 import { useInfoState } from "../recoil/atoms/useInfoState";
 import { authLoginState } from "../recoil/selectors/authSelector";
+import { InfoAddProps } from "../@types/UserType";
 
 const InfoResultPage = () => {
     const navigate = useNavigate();
     const isUserInfoDisabled = useRecoilValue(userInfoDisabledSelector);
+    const { bmi } = useRecoilValue<InfoAddProps>(useInfoState);
     const [authState, setAuthState] = useRecoilState(authLoginState);
     const infoDate = useRecoilValue(useInfoState);
 
@@ -24,6 +26,20 @@ const InfoResultPage = () => {
         }
     };
 
+    const reulstImage = (bmi: string) => {
+        const num = Number(bmi);
+
+        if (num < 18.5) {
+            return "/images/Cola1.png";
+        } else if (num < 23) {
+            return "/images/Cola2.png";
+        } else if (num < 25) {
+            return "/images/Cola3.png";
+        } else {
+            return "/images/Cola4.png";
+        }
+    };
+
     useEffect(() => {
         if (isUserInfoDisabled) navigate("/info");
     }, []);
@@ -31,7 +47,12 @@ const InfoResultPage = () => {
     return (
         <ContainerStyled>
             <ContentsBoxStyled>
-                <img src="/images/result.png" />
+                <BmiInfoBoxStyled>
+                    회원님의 BMI는
+                    <br />
+                    <strong>{bmi}</strong> 이네요!
+                </BmiInfoBoxStyled>
+                <img src={reulstImage(bmi)} />
             </ContentsBoxStyled>
 
             <NextBtnBoxStyled>
@@ -56,8 +77,26 @@ const ContainerStyled = styled.div`
 
 const ContentsBoxStyled = styled.div`
     flex: 1;
-    color: black;
+    display: flex;
+    flex-direction: column;
     padding-top: 70px;
+
+    & > img {
+        scale: 1.1;
+        padding-bottom: 50px;
+    }
+`;
+
+const BmiInfoBoxStyled = styled.div`
+    flex: 1;
+    padding-left: 13px;
+    font-size: 26px;
+    line-height: 28px;
+    font-weight: bold;
+
+    & > strong {
+        color: #3888ff;
+    }
 `;
 
 const NextBtnBoxStyled = styled.div`

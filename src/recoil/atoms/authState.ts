@@ -1,17 +1,23 @@
 import { atom } from "recoil";
 
+interface TokenUserProps {
+    USER_ID?: number;
+    USER_NICK?: string;
+    USER_EAMIL?: string;
+}
+
 interface AuthentificationProps {
-    email: string;
+    user: TokenUserProps | any;
     isFirstLogin: boolean;
     isLoggedIn: boolean;
     token: string;
 }
 
 export const initialize: AuthentificationProps = {
-    email: localStorage.getItem("token") || "",
+    user: {},
     isFirstLogin: false,
     isLoggedIn: localStorage.getItem("token") ? true : false,
-    token: "",
+    token: localStorage.getItem("token") || "",
 };
 
 export const authState = atom<AuthentificationProps>({

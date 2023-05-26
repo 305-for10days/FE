@@ -1,4 +1,5 @@
 import { styled } from "styled-components";
+import { EMOJI_DATAS } from "../constants/data";
 
 interface WorkOutRecordProps {
     info: {
@@ -6,14 +7,17 @@ interface WorkOutRecordProps {
         kcal: number;
         title: string;
         time: number;
+        image: number;
         createDate: Date;
     };
 }
 
 const WorkOutRecordItem = ({ info }: WorkOutRecordProps) => {
+    const imageSrc = EMOJI_DATAS.find((item) => item.id === (info.image || 1))?.src;
+
     return (
         <WorkOutRecordStyled>
-            <img src="https://via.placeholder.com/69x69" alt="" />
+            <img src={imageSrc} alt="" />
             <RecordInfoBoxStyled>
                 <div>
                     <strong>{info.kcal}kcal</strong>를 소비한

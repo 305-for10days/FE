@@ -15,7 +15,7 @@ export const fetchAddUserInfo = async (data: InfoAddProps) => {
 export const fetchUserProfileCheck = async () => {
     const res = await customAxios({
         method: "get",
-        url: "/api/signdUp",
+        url: "/api/signedUp",
     });
 
     return res;

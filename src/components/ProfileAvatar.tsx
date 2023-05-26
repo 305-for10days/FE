@@ -1,4 +1,4 @@
-import { useSetRecoilState } from "recoil";
+import { useRecoilState } from "recoil";
 import { styled } from "styled-components";
 import { authLoginState } from "../recoil/selectors/authSelector";
 import { useNavigate } from "react-router-dom";
@@ -7,7 +7,7 @@ import { useRef, useState } from "react";
 
 const ProfileAvatar = () => {
     const navigate = useNavigate();
-    const setAuthState = useSetRecoilState(authLoginState);
+    const [authState, setAuthState] = useRecoilState(authLoginState);
     const tabsRef = useRef<HTMLUListElement>(null);
     const [isShow, setIsShow] = useState<boolean>(false);
 
@@ -31,7 +31,7 @@ const ProfileAvatar = () => {
 
     return (
         <ProfileAvatarStyled>
-            <AvatarStyled onClick={handleOnClickProfile}>fitflow</AvatarStyled>
+            <AvatarStyled onClick={handleOnClickProfile}>{authState.user.USER_NICK}</AvatarStyled>
             <ul ref={tabsRef}>
                 <li onClick={handleOnClickLogout}>로그아웃</li>
             </ul>

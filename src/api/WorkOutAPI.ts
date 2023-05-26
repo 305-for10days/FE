@@ -1,7 +1,17 @@
 import { customAxios } from "../libs/customAxios";
 
-// 유저 루틴 목록
+// 기본 루틴 정보
 export const fetchRoutineList = async () => {
+    const res = await customAxios({
+        method: "get",
+        url: "/api/routine",
+    });
+
+    return res;
+};
+
+// 유저 루틴 목록
+export const fetchUserRoutineList = async () => {
     const res = await customAxios({
         method: "get",
         url: "/api/user/routine",
@@ -25,7 +35,7 @@ export const fetchCompleteWorkOut = async () => {
 export const fetchWorkOutsList = async () => {
     const res = await customAxios({
         method: "get",
-        url: "/api/workout",
+        url: "/api/workouts",
     });
 
     return res;

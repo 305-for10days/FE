@@ -5,7 +5,6 @@ import WorkOutItem from "../components/WorkOutItem";
 import ResultInfoBox from "../components/ResultInfoBox";
 
 const WorkOutSharePage = () => {
-    // const id = location.pathname.split("/")[2];
     const { workOuts } = useWorkOuts();
 
     return (

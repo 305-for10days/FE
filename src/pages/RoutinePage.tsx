@@ -1,6 +1,28 @@
 import RoutineItem from "../components/RoutineItem";
 import styled from "styled-components";
-import { ROUTINE_DATAS } from "../constants/data";
+import { useRoutines } from "../hooks/useRoutines";
+import { useEffect } from "react";
+
+const RoutinePage = () => {
+    const { routines } = useRoutines();
+
+    useEffect(() => {
+        console.log(routines);
+    });
+
+    return (
+        <ContainerStyled>
+            <ContentBoxStyled>
+                <h1 className="title">운동을 선택하세요</h1>
+                <RoutineListBoxStyled>
+                    {routines.length > 0
+                        ? routines.map((info) => <RoutineItem id={info.routine[0].id} goal={info.goal} key={info.routine[0].id} />)
+                        : new Array(5).fill("").map((_, idx) => <RoutineItem key={idx} loading={true} />)}
+                </RoutineListBoxStyled>
+            </ContentBoxStyled>
+        </ContainerStyled>
+    );
+};
 
 const ContainerStyled = styled.div`
     background: #fff;
@@ -25,20 +47,5 @@ const RoutineListBoxStyled = styled.div`
     flex-direction: column;
     gap: 16px;
 `;
-
-const RoutinePage = () => {
-    return (
-        <ContainerStyled>
-            <ContentBoxStyled>
-                <h1 className="title">운동을 선택하세요</h1>
-                <RoutineListBoxStyled>
-                    {ROUTINE_DATAS.map((info) => (
-                        <RoutineItem info={info} isActive={info.id === 1} key={info.id} />
-                    ))}
-                </RoutineListBoxStyled>
-            </ContentBoxStyled>
-        </ContainerStyled>
-    );
-};
 
 export default RoutinePage;

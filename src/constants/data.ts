@@ -60,7 +60,7 @@ export const WORKOUT_RECORD_DATAS = [
         kcal: 340,
         title: "체지방 감소",
         time: 50,
-        image: "",
+        image: 1,
         createDate: new Date(),
     },
     {
@@ -68,7 +68,7 @@ export const WORKOUT_RECORD_DATAS = [
         kcal: 120,
         title: "하체",
         time: 30,
-        image: "",
+        image: 2,
         createDate: new Date(),
     },
     {
@@ -76,7 +76,7 @@ export const WORKOUT_RECORD_DATAS = [
         kcal: 90,
         title: "코어",
         time: 20,
-        image: "",
+        image: 3,
         createDate: new Date(),
     },
 ];
