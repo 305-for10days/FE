@@ -1,14 +1,9 @@
 import { atom } from "recoil";
 
-interface RoutineWorkOutProps {
+export interface RoutineInfoProps {
     id: number;
     goal: string;
-    details: [{ set: number; workOutId: number }];
-}
-
-interface RoutineInfoProps {
-    goal: string;
-    routine: RoutineWorkOutProps[];
+    details: [{ set: number; workoutId: number }];
 }
 
 export const initialize: RoutineInfoProps[] = [];

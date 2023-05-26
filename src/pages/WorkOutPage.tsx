@@ -3,10 +3,11 @@ import Button from "../components/Button";
 import WorkOutBox from "../components/WorkOutBox";
 import { useWorkOuts } from "../hooks/useWorkOuts";
 import { useLocation, useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Timer from "../components/Timer";
 import { useSetRecoilState } from "recoil";
 import { workOutCompleteState } from "../recoil/atoms/workOutCompleteState";
+import { useRoutines } from "../hooks/useRoutines";
 
 interface StepProps {
     value: "workout" | "start";
@@ -18,7 +19,8 @@ const WorkOutPage = () => {
     const id = location.pathname.split("/")[2];
     const setIsWorkOutComplete = useSetRecoilState(workOutCompleteState);
     const [step, setStep] = useState<StepProps>({ value: "workout" });
-    const { workOuts, checked, handleOnClickCheckWorkdOut } = useWorkOuts();
+    const { getRoutineWorkOuts } = useRoutines();
+    const { workOuts, checked, setWorkOutsState, handleOnClickCheckWorkdOut } = useWorkOuts();
 
     const handleOnClickSucess = () => {
         if (step.value === "workout") {
@@ -32,13 +34,28 @@ const WorkOutPage = () => {
         }
     };
 
+    useEffect(() => {
+        const data = getRoutineWorkOuts(Number(id));
+        if (data) {
+            setWorkOutsState(data);
+        } else {
+            navigate("/routine");
+        }
+    }, []);
+
     return (
         <ContainerStyled>
             <ContentBoxStyled>
                 <h1 className="title">체지방 감소</h1>
                 <WorkOutListBoxStyled>
                     {workOuts.map((info) => (
-                        <WorkOutBox info={info} step={step.value} isActive={step.value !== "workout" && info.isActive} key={info.id} onClick={() => handleOnClickCheckWorkdOut(info.id)} />
+                        <WorkOutBox
+                            info={info}
+                            step={step.value}
+                            isActive={step.value !== "workout" && info.isActive}
+                            key={info.workoutId}
+                            onClick={() => handleOnClickCheckWorkdOut(info.workoutId)}
+                        />
                     ))}
                 </WorkOutListBoxStyled>
             </ContentBoxStyled>
@@ -63,7 +80,7 @@ const ContainerStyled = styled.div`
 
 const ContentBoxStyled = styled.div`
     flex: 1;
-    padding-top: 70px;
+    padding-top: 20px;
     text-align: center;
 
     & > .title {

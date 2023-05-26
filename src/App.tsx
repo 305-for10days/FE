@@ -22,7 +22,7 @@ function App() {
     useEffect(() => {
         (async () => {
             const res = await fetchWorkOutsList();
-            if (res.status === 2) setWorkOutInfoState(res.data);
+            if (res?.status === 200) setWorkOutInfoState(res.data);
         })();
     }, [authState]);
 

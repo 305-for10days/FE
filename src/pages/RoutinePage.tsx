@@ -1,14 +1,9 @@
 import RoutineItem from "../components/RoutineItem";
 import styled from "styled-components";
 import { useRoutines } from "../hooks/useRoutines";
-import { useEffect } from "react";
 
 const RoutinePage = () => {
     const { routines } = useRoutines();
-
-    useEffect(() => {
-        console.log(routines);
-    });
 
     return (
         <ContainerStyled>
@@ -16,7 +11,7 @@ const RoutinePage = () => {
                 <h1 className="title">운동을 선택하세요</h1>
                 <RoutineListBoxStyled>
                     {routines.length > 0
-                        ? routines.map((info) => <RoutineItem id={info.routine[0].id} goal={info.goal} key={info.routine[0].id} />)
+                        ? routines.map((info) => <RoutineItem id={info.id} goal={info.goal} key={info.id} />)
                         : new Array(5).fill("").map((_, idx) => <RoutineItem key={idx} loading={true} />)}
                 </RoutineListBoxStyled>
             </ContentBoxStyled>
@@ -32,7 +27,7 @@ const ContainerStyled = styled.div`
 `;
 
 const ContentBoxStyled = styled.div`
-    padding-top: 70px;
+    padding-top: 20px;
     text-align: center;
 
     & > .title {

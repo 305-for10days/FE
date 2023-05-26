@@ -1,11 +1,13 @@
 import styled, { css } from "styled-components";
 import WorkOutItem, { WorkOutItemProps } from "./WorkOutItem";
+import { WorkOutProps } from "../hooks/useWorkOuts";
 
 interface WorkOutBoxStyledProps {
     $isActive?: boolean;
 }
 
 interface WorkOutBoxProps extends WorkOutItemProps {
+    info: WorkOutProps;
     step: string;
     onClick: any;
 }

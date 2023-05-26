@@ -1,23 +1,30 @@
 import styled, { css } from "styled-components";
+import { WorkOutProps } from "../hooks/useWorkOuts";
+import { WorkOutTypes } from "../constants/data";
 
 export interface WorkOutItemProps {
-    info: {
-        id: number;
-        title: string;
-        times: number;
-        set: number;
-    };
+    info: WorkOutProps;
     isActive?: boolean;
     isCancel?: boolean;
 }
 
 const WorkOutItem = ({ info, isActive, isCancel }: WorkOutItemProps) => {
+    const formatWorkOutDesc = (data: WorkOutProps) => {
+        if (data.detail) {
+            const fnc = WorkOutTypes[data.detail?.type];
+            if (fnc) {
+                const desc = fnc({ ...data.detail, set: info.set });
+                return desc;
+            }
+        }
+    };
+
     return (
         <WorkOutItemStyled $isActive={isActive || false} $isCancel={isCancel || false}>
             <img src="https://via.placeholder.com/119x84" alt="" />
             <div className="infoGroup">
-                <div className="title">{info.title}</div>
-                <p className="desc">30초 3세트</p>
+                <div className="title">{info.detail?.name}</div>
+                <p className="desc">{formatWorkOutDesc(info)}</p>
             </div>
         </WorkOutItemStyled>
     );
@@ -29,7 +36,6 @@ interface WorkOutStyledProps {
 }
 
 const WorkOutItemStyled = styled.div<WorkOutStyledProps>`
-    /* cursor: pointer; */
     display: flex;
     gap: 32px;
     padding: 8px;

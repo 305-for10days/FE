@@ -7,3 +7,9 @@ export interface InfoAddProps {
     minutePerWorkout: number;
     bmi: string;
 }
+
+export interface RecommendWorkOutProps {
+    workoutId: number;
+    type: string;
+    calorie: number;
+}

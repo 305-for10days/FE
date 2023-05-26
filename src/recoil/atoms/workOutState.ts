@@ -1,6 +1,6 @@
 import { atom } from "recoil";
 
-interface WorkOutInfoProps {
+export interface WorkOutInfoProps {
     id: number;
     category: string;
     name: string;

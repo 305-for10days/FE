@@ -1,18 +1,25 @@
-import { useEffect, useRef, useState } from "react";
-import { ROUTINE_WORKOUT_DATAS } from "../constants/data";
+import { useRecoilValue } from "recoil";
+import { useEffect, useState } from "react";
+import { WorkOutInfoProps, workOutState } from "../recoil/atoms/workOutState";
+import { RoutineInfoProps } from "../recoil/atoms/routineState";
+// import { workOutResultState } from "../recoil/atoms/workOutReulstState";
 
-interface WorkOutProps {
+export interface WorkOutProps {
     id: number;
-    title: string;
-    times: number;
+    goal: string;
     set: number;
     isActive?: boolean;
+    workoutId: number;
+    detail?: WorkOutInfoProps;
 }
 
 export const useWorkOuts = () => {
-    const workOutRef = useRef(ROUTINE_WORKOUT_DATAS);
+    const workOutsInfo = useRecoilValue(workOutState);
+    const [routineWorkOuts, setRoutineWorkOut] = useState<WorkOutProps[]>([]);
     const [checked, setChecked] = useState<number[]>([]);
-    const [workOuts, setWorkOuts] = useState<WorkOutProps[]>(workOutRef.current);
+    const [workOuts, setWorkOuts] = useState<WorkOutProps[]>([]);
+
+    // const [results, setResults] = useRecoilValue(workOutResultState);
 
     const handleOnClickCheckWorkdOut = (id: number) => {
         if (checked.includes(id)) {
@@ -22,9 +29,22 @@ export const useWorkOuts = () => {
         }
     };
 
+    const setWorkOutsState = (data: RoutineInfoProps) => {
+        const newWorkState = data.details.map((item) => {
+            const detail = workOutsInfo.find((work) => work.id === item.workoutId);
+            return { ...item, goal: data.goal, id: data.id, isActive: false, detail: detail };
+        });
+
+        setRoutineWorkOut(newWorkState);
+    };
+
     useEffect(() => {
-        const newWorkOuts = workOutRef.current.map((item) => {
-            if (checked.includes(item.id)) {
+        setWorkOuts(routineWorkOuts);
+    }, [routineWorkOuts]);
+
+    useEffect(() => {
+        const newWorkOuts = routineWorkOuts.map((item) => {
+            if (checked.includes(item.workoutId)) {
                 return { ...item, isActive: true };
             } else {
                 return { ...item, isActive: false };
@@ -36,6 +56,7 @@ export const useWorkOuts = () => {
     return {
         workOuts,
         checked,
+        setWorkOutsState,
         handleOnClickCheckWorkdOut,
     };
 };

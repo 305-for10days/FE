@@ -13,8 +13,8 @@ const WorkOutResultPage = () => {
     const location = useLocation();
     const id = location.pathname.split("/")[2];
     const isWorkOutComplete = useRecoilValue(workOutCompleteState);
-    const { workOuts, checked, handleOnClickCheckWorkdOut } = useWorkOuts();
     const [completes, setCompletes] = useState<number[]>([]);
+    const { workOuts, checked, handleOnClickCheckWorkdOut } = useWorkOuts();
 
     const handleOnClickSharePage = () => {
         navigate(`/result/${id}`);
@@ -78,7 +78,7 @@ const ContainerStyled = styled.div`
 
 const ContentBoxStyled = styled.div`
     flex: 1;
-    padding-top: 70px;
+    padding-top: 20px;
     text-align: center;
 
     & > .titleGroup {

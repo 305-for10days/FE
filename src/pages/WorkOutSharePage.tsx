@@ -36,7 +36,7 @@ const ContainerStyled = styled.div`
 
 const ContentBoxStyled = styled.div`
     flex: 1;
-    padding: 70px 23px 0;
+    padding: 20px 23px 0;
     text-align: center;
 
     & > .title {
