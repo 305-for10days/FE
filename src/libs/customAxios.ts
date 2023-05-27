@@ -1,6 +1,6 @@
 import axios from "axios";
 
-// const PRD_URL = "";
+// const PRD_URL = "115.85.181.165:8080";
 const DEV_URL = "http://southoftheriver.synology.me:8082";
 
 export const customAxios = axios.create({

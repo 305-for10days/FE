@@ -5,8 +5,9 @@ import EmojiItem from "./EmojiItem";
 import { EMOJI_DATAS } from "../helpers/data";
 import { workOutCompleteState } from "../recoil/atoms/workOutCompleteState";
 import { useRecoilValue } from "recoil";
+import { fetchCompleteEmojiSave } from "../api/WorkOutAPI";
 
-const ResultInfoBox = () => {
+const ResultInfoBox = ({ resultId }: { resultId: number }) => {
     const isWorkOutComplete = useRecoilValue(workOutCompleteState);
     const [showModal, setShowModal] = useState<boolean>(false);
     const [emoji, setEmoji] = useState<number>(0);
@@ -15,8 +16,11 @@ const ResultInfoBox = () => {
         setShowModal(true);
     };
 
-    const handleOnClickEmoji = (id: number) => {
+    const handleOnClickEmoji = async (id: number) => {
         setEmoji(id);
+
+        await fetchCompleteEmojiSave(id, resultId);
+
         setShowModal(false);
     };
 

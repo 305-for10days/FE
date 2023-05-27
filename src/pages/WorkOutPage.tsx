@@ -21,6 +21,7 @@ const WorkOutPage = () => {
     const [step, setStep] = useState<StepProps>({ value: "workout" });
     const { getRoutineWorkOuts } = useRoutines();
     const { workOuts, checked, setWorkOutsState, handleOnClickCheckWorkdOut } = useWorkOuts();
+    const data = getRoutineWorkOuts(Number(id));
 
     const totalCalorie = () => {
         return workOuts.reduce((prev, cur) => {
@@ -39,14 +40,12 @@ const WorkOutPage = () => {
             return;
         }
         if (step.value === "start") {
-            // api 호출
-            setIsWorkOutComplete({ isCompletedIn: true, calorie: calorie });
+            setIsWorkOutComplete({ isCompletedIn: true, calorie: calorie, workOuts });
             navigate(`/routine/${id}/result`);
         }
     };
 
     useEffect(() => {
-        const data = getRoutineWorkOuts(Number(id));
         if (data) {
             setWorkOutsState(data);
         } else {

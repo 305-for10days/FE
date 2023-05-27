@@ -36,6 +36,10 @@ export const useWorkOuts = () => {
         setRoutineWorkOut(newWorkState);
     };
 
+    // const changeWorkOuts = () => {
+
+    // }
+
     useEffect(() => {
         setWorkOuts(routineWorkOuts);
     }, [routineWorkOuts]);

@@ -8,21 +8,41 @@ import { useWorkOuts } from "../hooks/useWorkOuts";
 import { workOutCompleteState } from "../recoil/atoms/workOutCompleteState";
 import styled from "styled-components";
 import { useRoutines } from "../hooks/useRoutines";
+import { fetchCompleteWorkOut } from "../api/WorkOutAPI";
+import { WorkoutSaveProps } from "../@types/WorkOutType";
 
 const WorkOutResultPage = () => {
     const navigate = useNavigate();
     const location = useLocation();
     const id = location.pathname.split("/")[2];
-    const isWorkOutComplete = useRecoilValue(workOutCompleteState);
+    const workOutComplete = useRecoilValue(workOutCompleteState);
     const [completes, setCompletes] = useState<number[]>([]);
-
     const { getRoutineWorkOuts } = useRoutines();
     const { workOuts, checked, setWorkOutsState, handleOnClickCheckWorkdOut } = useWorkOuts();
+    const data = getRoutineWorkOuts(Number(id));
 
-    const handleOnClickSharePage = () => {
+    const handleOnClickSharePage = async () => {
         // 루틴완료 로직
-        //
-        navigate(`/result/${id}`);
+
+        const details: WorkoutSaveProps[] = workOuts.map((item) => {
+            const completdSet = workOutComplete.workOuts.find((item) => item.workoutId === item.workoutId)?.isActive ? Number(item.set) : 0;
+
+            return {
+                workoutId: Number(item.workoutId),
+                set: Number(item.set),
+                completedSet: completdSet,
+                calorie: Number(item.detail?.calorie),
+            };
+        });
+
+        const res = await fetchCompleteWorkOut({
+            goal: String(data?.goal),
+            details: details,
+        });
+
+        if (res) {
+            navigate(`/result/${Number(res.data?.id)}`);
+        }
     };
 
     const handleChangeComplete = (id: number) => {
@@ -34,10 +54,9 @@ const WorkOutResultPage = () => {
     };
 
     useEffect(() => {
-        if (!isWorkOutComplete.isCompletedIn) {
+        if (!workOutComplete.isCompletedIn) {
             navigate(`/routine/${id}`);
         } else {
-            const data = getRoutineWorkOuts(Number(id));
             if (data) {
                 setWorkOutsState(data);
             } else {

@@ -1,48 +1,37 @@
 import styled from "styled-components";
 import Button from "../components/Button";
-import { useWorkOuts } from "../hooks/useWorkOuts";
 import WorkOutItem from "../components/WorkOutItem";
 import ResultInfoBox from "../components/ResultInfoBox";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useRecoilValue } from "recoil";
 import { workOutCompleteState } from "../recoil/atoms/workOutCompleteState";
 import { useEffect } from "react";
-import { useRoutines } from "../hooks/useRoutines";
 
 const WorkOutSharePage = () => {
     const navigate = useNavigate();
     const location = useLocation();
     const id = location.pathname.split("/")[2];
-    const isWorkOutComplete = useRecoilValue(workOutCompleteState);
-    const { getRoutineWorkOuts } = useRoutines();
-    const { workOuts, setWorkOutsState } = useWorkOuts();
+    const workOutComplete = useRecoilValue(workOutCompleteState);
 
     useEffect(() => {
-        if (!isWorkOutComplete.isCompletedIn) {
-            navigate(`/routine/${id}`);
-        } else {
-            const data = getRoutineWorkOuts(Number(id));
-            if (data) {
-                setWorkOutsState(data);
-            } else {
-                navigate(`/routine/${id}`);
-            }
+        if (!workOutComplete.isCompletedIn) {
+            navigate(`/main`);
         }
     }, []);
 
     return (
         <ContainerStyled>
             <ContentBoxStyled>
-                <ResultInfoBox />
+                <ResultInfoBox resultId={Number(id)} />
                 <WorkOutListBoxStyled>
-                    {workOuts.map((info) => (
+                    {workOutComplete.workOuts.map((info) => (
                         <WorkOutItem key={info.workoutId} info={info} />
                     ))}
                 </WorkOutListBoxStyled>
             </ContentBoxStyled>
             <BtnBoxStyled>
-                <Button color="#3888FF" textColor="#fff" size="full">
-                    공유하기
+                <Button color="#3888FF" textColor="#fff" size="full" onClick={() => navigate("/main")}>
+                    홈으로
                 </Button>
             </BtnBoxStyled>
         </ContainerStyled>

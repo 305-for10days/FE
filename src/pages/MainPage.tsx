@@ -4,6 +4,8 @@ import { useNavigate } from "react-router-dom";
 import WorkOutRecordItem from "../components/WorkOutRecordItem";
 import ProfileAvatar from "../components/ProfileAvatar";
 import { WORKOUT_RECORD_DATAS } from "../helpers/data";
+import { useEffect } from "react";
+import { fetchCompleteRoutine } from "../api/WorkOutAPI";
 
 const MainPage = () => {
     const navigate = useNavigate();
@@ -12,7 +14,13 @@ const MainPage = () => {
         navigate("/routine");
     };
 
-    const name = "/images/workouts/plank.png";
+    useEffect(() => {
+        (async () => {
+            const res = await fetchCompleteRoutine();
+
+            console.log(res);
+        })();
+    }, []);
 
     return (
         <ContainerStyled>

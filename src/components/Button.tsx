@@ -36,7 +36,7 @@ const ButtonStyled = styled.button<ButtonStyledProps>`
     line-height: 26px;
     transition: all 0.2s;
 
-    border: ${({ $color }) => ($color ? "none" : "1px solid #D9D9D9")};
+    border: ${({ $color }) => ($color ? `1px solid ${$color}` : "1px solid #D9D9D9")};
     background-color: ${({ $color }) => $color || "#FAFAFA"};
     color: ${({ $textColor }) => $textColor || "#000"};
 
