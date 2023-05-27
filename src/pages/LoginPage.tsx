@@ -9,7 +9,7 @@ const LoginPage = () => {
     return (
         <ContainerStyle>
             <LogoImageBox>
-                <img src="/logo.svg" />
+                <img src="/logo.svg" alt="" />
             </LogoImageBox>
 
             <ButtonGroupStyled>
