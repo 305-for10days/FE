@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import styled, { css } from "styled-components";
-import SkeletonItem from "../constants/SkeletonItem";
+import SkeletonItem from "../helpers/SkeletonItem";
 
 interface RoutineItem {
     id?: number;

@@ -1,12 +1,25 @@
 import { styled } from "styled-components";
 import WorkOutItem, { WorkOutItemProps } from "./WorkOutItem";
 import Button from "./Button";
+import { useEffect } from "react";
+import { fetchWorkOutRecommend } from "../api/WorkOutAPI";
 
 interface WorkOutChangeProps extends WorkOutItemProps {
     changeWork: any;
 }
 
 const WorkOutChangeBox = ({ info, changeWork }: WorkOutChangeProps) => {
+    useEffect(() => {
+        (async () => {
+            const { workoutId, set, detail } = info;
+            const res = await fetchWorkOutRecommend({ workoutId, calorie: detail?.calorie || 0, category: detail?.category || "", set: set });
+
+            if (res) {
+                console.log(res.data);
+            }
+        })();
+    }, []);
+
     return (
         <WorkOutChangeBoxStyled>
             <ChangeBoxWrapperStyled>

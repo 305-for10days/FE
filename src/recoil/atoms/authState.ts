@@ -15,7 +15,8 @@ interface AuthentificationProps {
 
 export const initialize: AuthentificationProps = {
     user: {},
-    isFirstLogin: false,
+    // isFirstLogin: false,
+    isFirstLogin: localStorage.getItem("first_login") ? true : false,
     isLoggedIn: localStorage.getItem("token") ? true : false,
     token: localStorage.getItem("token") || "",
 };

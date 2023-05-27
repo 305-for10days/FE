@@ -49,8 +49,6 @@ const SwipeWorkOutBox = ({ info, changeWork, changeComplete, isComplete, isCheck
             }
             if (ref.current) ref.current.style.transform = `translateX(${swipeValue}px)`;
 
-            console.log(isChecked);
-
             if (swipeValue === maxSwipe) {
                 if (isChecked) {
                     changeWork();

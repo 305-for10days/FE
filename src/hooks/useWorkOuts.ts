@@ -19,8 +19,6 @@ export const useWorkOuts = () => {
     const [checked, setChecked] = useState<number[]>([]);
     const [workOuts, setWorkOuts] = useState<WorkOutProps[]>([]);
 
-    // const [results, setResults] = useRecoilValue(workOutResultState);
-
     const handleOnClickCheckWorkdOut = (id: number) => {
         if (checked.includes(id)) {
             setChecked((checkd) => checkd.filter((item) => item != id));

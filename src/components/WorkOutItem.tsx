@@ -1,6 +1,6 @@
 import styled, { css } from "styled-components";
 import { WorkOutProps } from "../hooks/useWorkOuts";
-import { WorkOutTypes } from "../constants/data";
+import { WORKOUT_IMAGES, WorkOutTypes } from "../helpers/data";
 
 export interface WorkOutItemProps {
     info: WorkOutProps;
@@ -21,7 +21,7 @@ const WorkOutItem = ({ info, isActive, isCancel }: WorkOutItemProps) => {
 
     return (
         <WorkOutItemStyled $isActive={isActive || false} $isCancel={isCancel || false}>
-            <img src="https://via.placeholder.com/119x84" alt="" />
+            <img src={String(WORKOUT_IMAGES.find((item) => item.id === info.workoutId)?.src) || "/logo.svg"} alt={String(WORKOUT_IMAGES.find((item) => item.id === info.workoutId)?.name)} />
             <div className="infoGroup">
                 <div className="title">{info.detail?.name}</div>
                 <p className="desc">{formatWorkOutDesc(info)}</p>
@@ -48,6 +48,7 @@ const WorkOutItemStyled = styled.div<WorkOutStyledProps>`
 
     & > img {
         border-radius: 8px;
+        max-width: 117px;
         -webkit-user-drag: none;
     }
 

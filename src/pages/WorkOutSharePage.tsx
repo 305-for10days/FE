@@ -3,9 +3,32 @@ import Button from "../components/Button";
 import { useWorkOuts } from "../hooks/useWorkOuts";
 import WorkOutItem from "../components/WorkOutItem";
 import ResultInfoBox from "../components/ResultInfoBox";
+import { useLocation, useNavigate } from "react-router-dom";
+import { useRecoilValue } from "recoil";
+import { workOutCompleteState } from "../recoil/atoms/workOutCompleteState";
+import { useEffect } from "react";
+import { useRoutines } from "../hooks/useRoutines";
 
 const WorkOutSharePage = () => {
-    const { workOuts } = useWorkOuts();
+    const navigate = useNavigate();
+    const location = useLocation();
+    const id = location.pathname.split("/")[2];
+    const isWorkOutComplete = useRecoilValue(workOutCompleteState);
+    const { getRoutineWorkOuts } = useRoutines();
+    const { workOuts, setWorkOutsState } = useWorkOuts();
+
+    useEffect(() => {
+        if (!isWorkOutComplete.isCompletedIn) {
+            navigate(`/routine/${id}`);
+        } else {
+            const data = getRoutineWorkOuts(Number(id));
+            if (data) {
+                setWorkOutsState(data);
+            } else {
+                navigate(`/routine/${id}`);
+            }
+        }
+    }, []);
 
     return (
         <ContainerStyled>
@@ -13,7 +36,7 @@ const WorkOutSharePage = () => {
                 <ResultInfoBox />
                 <WorkOutListBoxStyled>
                     {workOuts.map((info) => (
-                        <WorkOutItem key={info.id} info={info} />
+                        <WorkOutItem key={info.workoutId} info={info} />
                     ))}
                 </WorkOutListBoxStyled>
             </ContentBoxStyled>

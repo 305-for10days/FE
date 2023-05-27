@@ -1,5 +1,5 @@
 import { styled } from "styled-components";
-import { EMOJI_DATAS } from "../constants/data";
+import { EMOJI_DATAS } from "../helpers/data";
 
 interface WorkOutRecordProps {
     info: {

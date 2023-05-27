@@ -10,6 +10,7 @@ export interface InfoAddProps {
 
 export interface RecommendWorkOutProps {
     workoutId: number;
-    type: string;
+    category: string;
     calorie: number;
+    set: number;
 }

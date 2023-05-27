@@ -7,6 +7,7 @@ import WorkOutChangeBox from "../components/WorkOutChangeBox";
 import { useWorkOuts } from "../hooks/useWorkOuts";
 import { workOutCompleteState } from "../recoil/atoms/workOutCompleteState";
 import styled from "styled-components";
+import { useRoutines } from "../hooks/useRoutines";
 
 const WorkOutResultPage = () => {
     const navigate = useNavigate();
@@ -14,9 +15,13 @@ const WorkOutResultPage = () => {
     const id = location.pathname.split("/")[2];
     const isWorkOutComplete = useRecoilValue(workOutCompleteState);
     const [completes, setCompletes] = useState<number[]>([]);
-    const { workOuts, checked, handleOnClickCheckWorkdOut } = useWorkOuts();
+
+    const { getRoutineWorkOuts } = useRoutines();
+    const { workOuts, checked, setWorkOutsState, handleOnClickCheckWorkdOut } = useWorkOuts();
 
     const handleOnClickSharePage = () => {
+        // 루틴완료 로직
+        //
         navigate(`/result/${id}`);
     };
 
@@ -31,6 +36,13 @@ const WorkOutResultPage = () => {
     useEffect(() => {
         if (!isWorkOutComplete.isCompletedIn) {
             navigate(`/routine/${id}`);
+        } else {
+            const data = getRoutineWorkOuts(Number(id));
+            if (data) {
+                setWorkOutsState(data);
+            } else {
+                navigate(`/routine/${id}`);
+            }
         }
     }, []);
 
@@ -43,23 +55,23 @@ const WorkOutResultPage = () => {
                 </div>
                 <WorkOutListBoxStyled>
                     {workOuts.map((info) =>
-                        checked.includes(info.id) ? (
-                            <WorkOutChangeBox key={info.id} info={info} changeWork={() => handleOnClickCheckWorkdOut(info.id)}></WorkOutChangeBox>
+                        checked.includes(info.workoutId) ? (
+                            <WorkOutChangeBox key={info.workoutId} info={info} changeWork={() => handleOnClickCheckWorkdOut(info.workoutId)}></WorkOutChangeBox>
                         ) : (
                             <SwipeWorkOutBox
-                                key={info.id}
+                                key={info.workoutId}
                                 info={info}
-                                isComplete={completes.includes(info.id)}
-                                isChecked={checked.includes(info.id)}
-                                changeComplete={() => handleChangeComplete(info.id)}
-                                changeWork={() => handleOnClickCheckWorkdOut(info.id)}
+                                isComplete={completes.includes(info.workoutId)}
+                                isChecked={checked.includes(info.workoutId)}
+                                changeComplete={() => handleChangeComplete(info.workoutId)}
+                                changeWork={() => handleOnClickCheckWorkdOut(info.workoutId)}
                             />
                         )
                     )}
                 </WorkOutListBoxStyled>
             </ContentBoxStyled>
             <BtnBoxStyled>
-                <Button color="#3888FF" textColor="#fff" size="full" isDisabled={completes.length !== 5} onClick={handleOnClickSharePage}>
+                <Button color="#3888FF" textColor="#fff" size="full" isDisabled={completes.length !== workOuts.length} onClick={handleOnClickSharePage}>
                     다 했어요
                 </Button>
             </BtnBoxStyled>

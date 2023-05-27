@@ -2,8 +2,8 @@ import styled from "styled-components";
 import Button from "../components/Button";
 import { useNavigate } from "react-router-dom";
 import WorkOutRecordItem from "../components/WorkOutRecordItem";
-import { WORKOUT_RECORD_DATAS } from "../constants/data";
 import ProfileAvatar from "../components/ProfileAvatar";
+import { WORKOUT_RECORD_DATAS } from "../helpers/data";
 
 const MainPage = () => {
     const navigate = useNavigate();
@@ -11,6 +11,8 @@ const MainPage = () => {
     const handleOnClickRoutine = () => {
         navigate("/routine");
     };
+
+    const name = "/images/workouts/plank.png";
 
     return (
         <ContainerStyled>

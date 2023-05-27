@@ -2,9 +2,12 @@ import styled from "styled-components";
 import { useState } from "react";
 import Modal from "./Modal";
 import EmojiItem from "./EmojiItem";
-import { EMOJI_DATAS } from "../constants/data";
+import { EMOJI_DATAS } from "../helpers/data";
+import { workOutCompleteState } from "../recoil/atoms/workOutCompleteState";
+import { useRecoilValue } from "recoil";
 
 const ResultInfoBox = () => {
+    const isWorkOutComplete = useRecoilValue(workOutCompleteState);
     const [showModal, setShowModal] = useState<boolean>(false);
     const [emoji, setEmoji] = useState<number>(0);
 
@@ -26,7 +29,7 @@ const ResultInfoBox = () => {
                 <div className="desc">
                     <strong>이번운동으로</strong>
                     <br />
-                    <strong>340kcal</strong>를
+                    <strong>{isWorkOutComplete.calorie}kcal</strong>를
                     <br />
                     소비했습니다.
                 </div>

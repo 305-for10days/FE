@@ -22,14 +22,25 @@ const WorkOutPage = () => {
     const { getRoutineWorkOuts } = useRoutines();
     const { workOuts, checked, setWorkOutsState, handleOnClickCheckWorkdOut } = useWorkOuts();
 
+    const totalCalorie = () => {
+        return workOuts.reduce((prev, cur) => {
+            if (cur.isActive) {
+                return prev + Number(cur.detail?.calorie) * cur.set;
+            }
+            return prev;
+        }, 0);
+    };
+
     const handleOnClickSucess = () => {
+        const calorie = totalCalorie();
+
         if (step.value === "workout") {
             setStep({ value: "start" });
             return;
         }
         if (step.value === "start") {
             // api 호출
-            setIsWorkOutComplete({ isCompletedIn: true });
+            setIsWorkOutComplete({ isCompletedIn: true, calorie: calorie });
             navigate(`/routine/${id}/result`);
         }
     };
