@@ -2,7 +2,6 @@ import { styled } from "styled-components";
 import WorkOutItem, { WorkOutItemProps } from "./WorkOutItem";
 import Button from "./Button";
 import { useEffect } from "react";
-import { fetchWorkOutRecommend } from "../api/WorkOutAPI";
 
 interface WorkOutChangeProps extends WorkOutItemProps {
     changeWork: any;

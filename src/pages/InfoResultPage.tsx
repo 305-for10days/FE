@@ -21,7 +21,7 @@ const InfoResultPage = () => {
 
         if (String(res?.data.toLowerCase()) === "ok") {
             setAuthState({ ...authState, isFirstLogin: false });
-            localStorage.setItem("firstLogin", "false");
+            localStorage.setItem("first_login", "false");
             navigate("/main");
         }
     };
