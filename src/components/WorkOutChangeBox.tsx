@@ -10,14 +10,13 @@ interface WorkOutChangeProps extends WorkOutItemProps {
 
 const WorkOutChangeBox = ({ info, changeWork }: WorkOutChangeProps) => {
     useEffect(() => {
-        (async () => {
-            const { workoutId, set, detail } = info;
-            const res = await fetchWorkOutRecommend({ workoutId, calorie: detail?.calorie || 0, category: detail?.category || "", set: set });
-
-            if (res) {
-                console.log(res.data);
-            }
-        })();
+        // (async () => {
+        //     const { workoutId, set, detail } = info;
+        //     const res = await fetchWorkOutRecommend({ workoutId, calorie: detail?.calorie || 0, category: detail?.category || "", set: set });
+        //     if (res) {
+        //         console.log(res.data);
+        //     }
+        // })();
     }, []);
 
     return (

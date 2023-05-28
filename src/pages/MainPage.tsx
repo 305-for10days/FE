@@ -3,12 +3,14 @@ import Button from "../components/Button";
 import { useNavigate } from "react-router-dom";
 import WorkOutRecordItem from "../components/WorkOutRecordItem";
 import ProfileAvatar from "../components/ProfileAvatar";
-import { WORKOUT_RECORD_DATAS } from "../helpers/data";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { fetchCompleteRoutine } from "../api/WorkOutAPI";
+import { WorkOutRecordProps } from "../@types/RoutineType";
 
 const MainPage = () => {
     const navigate = useNavigate();
+
+    const [completedRoutines, setCompletedRoutines] = useState<WorkOutRecordProps[]>([]);
 
     const handleOnClickRoutine = () => {
         navigate("/routine");
@@ -18,7 +20,9 @@ const MainPage = () => {
         (async () => {
             const res = await fetchCompleteRoutine();
 
-            console.log(res);
+            if (res) {
+                setCompletedRoutines(res.data.routines);
+            }
         })();
     }, []);
 
@@ -30,8 +34,8 @@ const MainPage = () => {
                     <ProfileAvatar />
                 </div>
                 <WorkOutRecordBoxStyled>
-                    {WORKOUT_RECORD_DATAS.map((info) => (
-                        <WorkOutRecordItem key={info.id} info={info} />
+                    {completedRoutines.map((item) => (
+                        <WorkOutRecordItem key={item.routineId} info={item} />
                     ))}
                 </WorkOutRecordBoxStyled>
             </ContentBoxStyled>

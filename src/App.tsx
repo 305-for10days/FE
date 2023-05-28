@@ -23,7 +23,6 @@ function App() {
         (async () => {
             if (authState.isLoggedIn) {
                 const res = await fetchWorkOutsList();
-                console.log(res?.data);
                 if (res?.status === 200) setWorkOutInfoState(res.data);
             }
         })();

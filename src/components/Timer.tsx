@@ -68,8 +68,7 @@ const Timer = () => {
 
     useEffect(() => {
         if (time.seconds === "05") {
-            audioRef.current?.play();
-            console.log("10초가 지났습니다");
+            // audioRef.current?.play();
         }
     }, [time]);
 

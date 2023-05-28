@@ -2,7 +2,6 @@ import { useRecoilValue } from "recoil";
 import { useEffect, useState } from "react";
 import { WorkOutInfoProps, workOutState } from "../recoil/atoms/workOutState";
 import { RoutineInfoProps } from "../recoil/atoms/routineState";
-// import { workOutResultState } from "../recoil/atoms/workOutReulstState";
 
 export interface WorkOutProps {
     id: number;
@@ -15,6 +14,7 @@ export interface WorkOutProps {
 
 export const useWorkOuts = () => {
     const workOutsInfo = useRecoilValue(workOutState);
+    const [isChange, setIsChange] = useState<boolean>(false);
     const [routineWorkOuts, setRoutineWorkOut] = useState<WorkOutProps[]>([]);
     const [checked, setChecked] = useState<number[]>([]);
     const [workOuts, setWorkOuts] = useState<WorkOutProps[]>([]);
@@ -30,7 +30,7 @@ export const useWorkOuts = () => {
     const setWorkOutsState = (data: RoutineInfoProps) => {
         const newWorkState = data.details.map((item) => {
             const detail = workOutsInfo.find((work) => work.id === item.workoutId);
-            return { ...item, goal: data.goal, id: data.id, isActive: false, detail: detail };
+            return { ...item, goal: data.goal, id: data.id, calorie: detail?.calorie, isActive: false, detail: detail };
         });
 
         setRoutineWorkOut(newWorkState);
@@ -60,5 +60,7 @@ export const useWorkOuts = () => {
         checked,
         setWorkOutsState,
         handleOnClickCheckWorkdOut,
+        isChange,
+        setIsChange,
     };
 };

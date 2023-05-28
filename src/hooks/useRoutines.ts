@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { fetchRoutineList } from "../api/WorkOutAPI";
+import { fetchRoutineList, fetchUserRoutineList } from "../api/WorkOutAPI";
 import { useRecoilState } from "recoil";
 import { RoutineInfoProps, routineState } from "../recoil/atoms/routineState";
 
@@ -14,11 +14,11 @@ export const useRoutines = () => {
         (async () => {
             const res = await fetchRoutineList();
             if (res?.status === 200) {
-                // const resp = await fetchUserRoutineList();
+                const resp = await fetchUserRoutineList();
 
                 const newRoutines = res.data.map((routine: RoutineInfoProps) => {
-                    // const newRoutine = resp.data.find((item: RoutineInfoProps) => item.goal === routine.goal);
-                    // if (newRoutine) return newRoutine;
+                    const newRoutine = resp?.data.find((item: RoutineInfoProps) => item.goal === routine.goal);
+                    if (newRoutine) return newRoutine;
                     return routine;
                 });
 

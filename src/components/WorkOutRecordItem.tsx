@@ -1,30 +1,28 @@
 import { styled } from "styled-components";
 import { EMOJI_DATAS } from "../helpers/data";
+import { WorkOutRecordProps } from "../@types/RoutineType";
+import { formatDate } from "../helpers/DateUtile";
 
-interface WorkOutRecordProps {
-    info: {
-        id: number;
-        kcal: number;
-        title: string;
-        time: number;
-        image: number;
-        createDate: Date;
-    };
-}
+const WorkOutRecordItem = ({ info }: { info: WorkOutRecordProps }) => {
+    const imageSrc = EMOJI_DATAS.find((item) => item.id === (info.emojiId || 1))?.src;
+    const { date } = info;
+    const newDate = new Date(date[0], date[1], date[2], date[3], date[4], date[5], date[6]);
 
-const WorkOutRecordItem = ({ info }: WorkOutRecordProps) => {
-    const imageSrc = EMOJI_DATAS.find((item) => item.id === (info.image || 1))?.src;
-
+    /**
+     * Date locale ko가 적용되지 않음
+     * 총 시간 체크하는 부분 필요
+     */
     return (
         <WorkOutRecordStyled>
             <img src={imageSrc} alt="" />
             <RecordInfoBoxStyled>
                 <div>
-                    <strong>{info.kcal}kcal</strong>를 소비한
+                    <strong>{info.calories}kcal</strong>를 소비한
                     <br />
-                    <strong>{info.title}</strong> 운동 <strong>{info.time}분</strong>
+                    <strong>{info.goal}</strong> 운동
+                    {/* <strong>{info.time}분</strong> */}
                 </div>
-                <p>5월 20일</p>
+                <p>{formatDate(newDate)}</p>
             </RecordInfoBoxStyled>
         </WorkOutRecordStyled>
     );

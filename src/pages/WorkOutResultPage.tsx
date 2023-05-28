@@ -8,7 +8,7 @@ import { useWorkOuts } from "../hooks/useWorkOuts";
 import { workOutCompleteState } from "../recoil/atoms/workOutCompleteState";
 import styled from "styled-components";
 import { useRoutines } from "../hooks/useRoutines";
-import { fetchCompleteWorkOut } from "../api/WorkOutAPI";
+import { fetchCompleteWorkOut, fetchNewRoutineSave } from "../api/WorkOutAPI";
 import { WorkoutSaveProps } from "../@types/WorkOutType";
 
 const WorkOutResultPage = () => {
@@ -18,14 +18,12 @@ const WorkOutResultPage = () => {
     const workOutComplete = useRecoilValue(workOutCompleteState);
     const [completes, setCompletes] = useState<number[]>([]);
     const { getRoutineWorkOuts } = useRoutines();
-    const { workOuts, checked, setWorkOutsState, handleOnClickCheckWorkdOut } = useWorkOuts();
+    const { workOuts, checked, setWorkOutsState, handleOnClickCheckWorkdOut, isChange } = useWorkOuts();
     const data = getRoutineWorkOuts(Number(id));
 
-    const handleOnClickSharePage = async () => {
-        // 루틴완료 로직
-
+    const completeRoutine = async () => {
         const details: WorkoutSaveProps[] = workOuts.map((item) => {
-            const completdSet = workOutComplete.workOuts.find((item) => item.workoutId === item.workoutId)?.isActive ? Number(item.set) : 0;
+            const completdSet = workOutComplete.workOuts.find((el) => item.workoutId === el.workoutId)?.isActive ? Number(item.set) : 0;
 
             return {
                 workoutId: Number(item.workoutId),
@@ -36,9 +34,38 @@ const WorkOutResultPage = () => {
         });
 
         const res = await fetchCompleteWorkOut({
+            id: Number(id),
             goal: String(data?.goal),
             details: details,
         });
+        return res;
+    };
+
+    const newRoutineSave = async () => {
+        const details: WorkoutSaveProps[] = workOuts.map((item) => {
+            return {
+                workoutId: Number(item.workoutId),
+                set: Number(item.set),
+                completedSet: 0,
+                calorie: Number(item.detail?.calorie),
+            };
+        });
+        const res = await fetchNewRoutineSave({
+            goal: String(data?.goal),
+            details: details,
+        });
+        return res;
+    };
+
+    const handleOnClickSharePage = async () => {
+        // 루틴완료 로직
+        const res = await completeRoutine();
+
+        // 루틴 운동 변경 로직
+        if (isChange) {
+            const resp = await newRoutineSave();
+            if (!resp) return;
+        }
 
         if (res) {
             navigate(`/result/${Number(res.data?.id)}`);
