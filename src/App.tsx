@@ -20,8 +20,6 @@ function App() {
     const setWorkOutInfoState = useSetRecoilState(workOutState);
 
     useEffect(() => {
-        console.log(localStorage.getItem("firstLogin"));
-        console.log(authState);
         (async () => {
             if (authState.isLoggedIn) {
                 const res = await fetchWorkOutsList();
