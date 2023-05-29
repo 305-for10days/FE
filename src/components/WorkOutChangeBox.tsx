@@ -1,34 +1,43 @@
 import { styled } from "styled-components";
 import WorkOutItem, { WorkOutItemProps } from "./WorkOutItem";
 import Button from "./Button";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import { WorkOutProps } from "../hooks/useWorkOuts";
 
 interface WorkOutChangeProps extends WorkOutItemProps {
+    checkOut: any;
     changeWork: any;
+    recommendWorkOut: any;
 }
 
-const WorkOutChangeBox = ({ info, changeWork }: WorkOutChangeProps) => {
+const WorkOutChangeBox = ({ info, checkOut, changeWork, recommendWorkOut }: WorkOutChangeProps) => {
+    const [newWorkOut, setNewWorkOut] = useState<WorkOutProps>(info);
+
+    const handleOnClickChangeWorkOut = () => {
+        changeWork(info.workoutId, newWorkOut);
+    };
+
     useEffect(() => {
-        // (async () => {
-        //     const { workoutId, set, detail } = info;
-        //     const res = await fetchWorkOutRecommend({ workoutId, calorie: detail?.calorie || 0, category: detail?.category || "", set: set });
-        //     if (res) {
-        //         console.log(res.data);
-        //     }
-        // })();
+        const newWorkOut = recommendWorkOut(info);
+
+        setNewWorkOut(newWorkOut);
     }, []);
 
     return (
         <WorkOutChangeBoxStyled>
             <ChangeBoxWrapperStyled>
                 <WorkOutItem info={info} isCancel={true} />
-                <img src="/icons/down-arrow.svg" alt="아래화살표" />
-                <WorkOutItem info={info} isActive={true} />
+                {newWorkOut && (
+                    <>
+                        <img src="/icons/down-arrow.svg" alt="아래화살표" />
+                        <WorkOutItem info={newWorkOut} isActive={true} />
+                    </>
+                )}
                 <div className="btnGroup">
-                    <Button size="full" onClick={changeWork}>
+                    <Button size="full" onClick={checkOut}>
                         그대로 두기
                     </Button>
-                    <Button color="#3888FF" textColor="#fff" size="full">
+                    <Button color="#3888FF" textColor="#fff" size="full" onClick={handleOnClickChangeWorkOut}>
                         바꾸기
                     </Button>
                 </div>

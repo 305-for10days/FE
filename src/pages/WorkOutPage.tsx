@@ -33,14 +33,16 @@ const WorkOutPage = () => {
     };
 
     const handleOnClickSucess = () => {
-        const calorie = totalCalorie();
-
         if (step.value === "workout") {
             setStep({ value: "start" });
             return;
         }
+
         if (step.value === "start") {
-            setIsWorkOutComplete({ isCompletedIn: true, calorie: calorie, workOuts });
+            const calorie = totalCalorie();
+            const completeWorkOuts = workOuts.filter((item) => item.isActive);
+
+            setIsWorkOutComplete({ isCompletedIn: true, calorie: calorie, workOuts: completeWorkOuts });
             navigate(`/routine/${id}/result`);
         }
     };

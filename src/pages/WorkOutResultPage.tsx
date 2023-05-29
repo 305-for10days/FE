@@ -18,17 +18,15 @@ const WorkOutResultPage = () => {
     const workOutComplete = useRecoilValue(workOutCompleteState);
     const [completes, setCompletes] = useState<number[]>([]);
     const { getRoutineWorkOuts } = useRoutines();
-    const { workOuts, checked, setWorkOutsState, handleOnClickCheckWorkdOut, isChange } = useWorkOuts();
+    const { workOuts, checked, setWorkOutsState, handleOnClickCheckWorkdOut, changeWorkOuts, recommendWorkOut, isChange } = useWorkOuts();
     const data = getRoutineWorkOuts(Number(id));
 
     const completeRoutine = async () => {
-        const details: WorkoutSaveProps[] = workOuts.map((item) => {
-            const completdSet = workOutComplete.workOuts.find((el) => item.workoutId === el.workoutId)?.isActive ? Number(item.set) : 0;
-
+        const details: WorkoutSaveProps[] = workOutComplete.workOuts.map((item) => {
             return {
                 workoutId: Number(item.workoutId),
                 set: Number(item.set),
-                completedSet: completdSet,
+                completedSet: Number(item.set),
                 calorie: Number(item.detail?.calorie),
             };
         });
@@ -102,7 +100,13 @@ const WorkOutResultPage = () => {
                 <WorkOutListBoxStyled>
                     {workOuts.map((info) =>
                         checked.includes(info.workoutId) ? (
-                            <WorkOutChangeBox key={info.workoutId} info={info} changeWork={() => handleOnClickCheckWorkdOut(info.workoutId)}></WorkOutChangeBox>
+                            <WorkOutChangeBox
+                                key={info.workoutId}
+                                info={info}
+                                checkOut={() => handleOnClickCheckWorkdOut(info.workoutId)}
+                                changeWork={changeWorkOuts}
+                                recommendWorkOut={recommendWorkOut}
+                            />
                         ) : (
                             <SwipeWorkOutBox
                                 key={info.workoutId}

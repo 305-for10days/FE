@@ -35,7 +35,7 @@ const MainPage = () => {
                 </div>
                 <WorkOutRecordBoxStyled>
                     {completedRoutines.map((item) => (
-                        <WorkOutRecordItem key={item.routineId} info={item} />
+                        <WorkOutRecordItem key={[...item.date].join("")} info={item} />
                     ))}
                 </WorkOutRecordBoxStyled>
             </ContentBoxStyled>
